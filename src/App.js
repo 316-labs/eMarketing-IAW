@@ -1,25 +1,26 @@
-import React, { Component } from 'react';
-import { Row, Col, CardPanel, Toast } from 'react-materialize';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
+import Dashboard from './components/Dashboard';
+import ContactsIndex from './components/contacts/ContactsIndex';
+import NewContact from './components/contacts/NewContact';
+import './stylesheets/App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <Row>
-        <Col s={ 12 } m={ 5 }>
-          <CardPanel className="teal lighten-4 black-text">
-            <span>Prueba prueba</span>
-          </CardPanel>
-        </Col>
-        <Col s={ 12 } m={ 7 }>
-          <Toast toast="here you go!">
-            Toast
-          </Toast>
-        </Col>
-      </Row>
-    );
-  }
+class App extends React.Component {
+	render() {
+		return (
+			<Router>
+				<div className="emarketing">
+					<Sidebar />
+					<main>
+						<Route exact path='/' component={ Dashboard } />
+						<Route exact path='/contactos' component={ ContactsIndex } />
+						<Route path='/contactos/nuevo' component={ NewContact } />
+					</main>
+				</div>
+			</Router>
+		);
+	}
 }
 
 export default App;

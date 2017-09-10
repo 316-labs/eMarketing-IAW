@@ -1,0 +1,23 @@
+.emarketing .header {
+  background-color: lightgray;
+  padding: 10px 20px; }
+  .emarketing .header .row {
+    margin: 0; }
+  .emarketing .header h1 {
+    font-size: 30px;
+    margin: 0;
+    font-variant: small-caps; }
+
+.emarketing .sidebar {
+  position: absolute;
+  width: 200px;
+  height: 100%;
+  background-color: lightgray; }
+
+.emarketing main {
+  position: absolute;
+  overflow: auto;
+  width: calc(100% - 200px);
+  height: 100vh;
+  left: 200px;
+  background-color: lightblue; }
