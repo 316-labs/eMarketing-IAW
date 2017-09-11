@@ -5,17 +5,17 @@ import { Button, Icon } from 'react-materialize';
 
 class ContactsIndex extends React.Component {
 	search() {
-		console.log('asd');
+		console.log('search contact');
 	}
 
   render() {
-		const action = { action: this.search, name: 'Search' };
   	return(
-			<div>
+			<div className='contacts-index'>
 				<Header
 					title="Contactos"
 					back="/"
-					action={ action }/>
+					action={ () => this.search() }
+					actionName='Search' />
 				<div className="container">
 					<h1>Contacts</h1>
 					<Button floating large className='teal'><Link to='/contactos/nuevo'><Icon>add</Icon></Link></Button>

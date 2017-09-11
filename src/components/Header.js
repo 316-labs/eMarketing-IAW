@@ -4,12 +4,12 @@ import { Row, Col, Icon, Button } from 'react-materialize'
 
 class Header extends React.Component {
   render() {
-		const { title, back, action } = this.props;
+		const { title, back, action, actionName } = this.props;
   	return(
 			<header className="header">
 				<Row>
-					{ 
-						back && 
+					{
+						back &&
 						<Col s={1}>
 							<Link to={ back }><Icon className="back">arrow_back</Icon></Link>
 						</Col>
@@ -20,7 +20,7 @@ class Header extends React.Component {
 					{
 						action &&
 						<Col s={4}>
-							<Button waves="light" className='primary right' onClick={ () => action.action() }>{ action.name }</Button>
+							<Button waves="light" className='primary right' onClick={ () => action() }>{ actionName }</Button>
 						</Col>
 					}
 				</Row>

@@ -11,14 +11,15 @@ class NewContact extends React.Component {
 	}
 
 	save() {
-		console.log('save');
+		console.log('save contact');
+		this.props.history.push('/contactos');
 	}
 
   render() {
 		const { contact } = this.state;
-		const headerAction = { action: this.save, name: 'Guardar' };
+		const headerAction = { action: () => this.save(), name: 'Guardar' };
   	return(
-			<div>
+			<div className='contacts-new'>
 				<Header
 					title='Nuevo Contacto'
 					back="/contactos"

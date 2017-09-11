@@ -8,6 +8,7 @@ class Sidebar extends React.Component {
 				<h1>Sidebar</h1>
 				<ul>
 					<li><Link to='/'>Inicio</Link></li>
+					<li><Link to='/campañas'>Campañas</Link></li>
 					<li><Link to='/contactos'>Contactos</Link></li>
 				</ul>
 			</div>
