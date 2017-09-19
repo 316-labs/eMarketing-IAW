@@ -19,7 +19,7 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			authorized: true,
+			authorized: false,
 			userId: '',
 		}
 	}

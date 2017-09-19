@@ -7,7 +7,7 @@ class Register extends React.Component {
 			<div className='users-register'>
 				<div className="container">
 					<label htmlFor="name">Nombre</label>
-					<input type="text" name="name" value="Lusi carlos" />
+					<input type="text" name="name" value="" />
 				</div>
 			</div>
 		);
