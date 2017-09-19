@@ -10,7 +10,7 @@ class Header extends React.Component {
 				<Row>
 					{
 						back &&
-						<Col s={1}>
+						<Col s={1} className="back">
 							<Link to={ back }><Icon className="back">arrow_back</Icon></Link>
 						</Col>
 					}

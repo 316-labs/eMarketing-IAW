@@ -1,0 +1,46 @@
+.contactos {
+  .acciones {
+    .etiquetas {
+      position: relative;
+      top: 15px;
+    }
+  }
+
+  .contacto-index {
+    border: 1px solid color("grey", "base");
+    margin-bottom: 15px;
+
+    .row {
+      margin: 0;
+    }
+
+    .campo {
+      color: color("grey", "base");
+      font-size: 0.85em;
+    }
+
+    ul.contacto-info {
+      li {
+        margin-bottom: 15px;
+      }
+    }
+
+    .badge {
+      position: relative;
+      background-color: color("blue-grey", "base");
+      color: white;
+      height: 170px;
+      text-align: center;
+      font-size: 2em;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .buscar-contacto {
+    border: 1px solid color("grey", "base");
+    padding: 10px;
+  }
+}

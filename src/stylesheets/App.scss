@@ -1,20 +1,25 @@
+@import 'materialize';
+@import 'unauthorized';
+@import 'sidebar';
+@import 'header';
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
+
+@import 'contactos';
+
+html {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
 .emarketing {
-	@import 'header';
-	
-	$sidebar-width: 200px;
-	.sidebar {
-		position: absolute;
-		width: $sidebar-width;
-		height: 100%;
-		background-color: lightgray;
-	}
-	
 	main {
 		position: absolute;
 		overflow: auto;
-		width: calc(100% - 200px); 
+		width: calc(100% - 200px);
 		height: 100vh;
 		left: $sidebar-width;
-		background-color: lightblue;
 	}
 }

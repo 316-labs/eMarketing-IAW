@@ -1,0 +1,72 @@
+.sidebar-btn {
+  padding: 20px 20px;
+  background-color: $sidebar-dark-color;
+  transition: 0.3s ease;
+  color: white;
+  border: none;
+
+  &:hover {
+   background-color: color("grey", "darken-2");
+   color: $secondary-color-dark;
+  }
+}
+
+.sidebar {
+	position: absolute;
+	width: $sidebar-width;
+  background-color: $sidebar-background-color;
+
+  .logo {
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+
+    p {
+      font-size: 18px;
+      margin-top: 0;
+      color: white;
+      background-color: $primary-color-dark;
+    }
+
+    img {
+      width: 45%;
+      padding: 5px;
+    }
+  }
+
+  ul {
+    li {
+      padding: 20px 0px;
+      a {
+        @extend .sidebar-btn;
+
+        &:hover {
+          padding: 20px 60px;
+        }
+      }
+    }
+  }
+
+  .crear-campana {
+    margin-top: 60px;
+    padding: 20px 0px;
+    a {
+      @extend .sidebar-btn;
+
+      background-color: $primary-color-dark;
+
+      &:hover {
+        background-color: $primary-color-dark;
+        padding: 20px 40px;
+      }
+    }
+  }
+
+  .salir {
+    margin-top: 60px;
+    padding: 20px 0px;
+    a {
+      @extend .sidebar-btn;
+    }
+  }
+}

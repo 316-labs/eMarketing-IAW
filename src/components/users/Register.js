@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../Header';
-import UserForm from './UserForm';
 
 class Register extends React.Component {
 

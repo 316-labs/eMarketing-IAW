@@ -1,0 +1,35 @@
+.unauthorized {
+	.logo {
+		img {
+			height: 100px;
+		}
+	}
+
+	.half {
+		position: absolute;
+		overflow: auto;
+		width: 50%;
+		height: 100vh;
+
+		&.views {
+			padding: 50px 10px;
+			left: 50%;
+		}
+
+		&.welcome-image {
+			background-color: gray;
+			overflow: hidden;
+
+			img {
+				height: 100vh;
+				position: relative;
+				right: 200px;
+			}
+		}
+	}
+
+	.login-button {
+		width: 100%;
+		margin: 15px 0;
+	}
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import ContactForm from './ContactForm';
+import $ from 'jquery';
 
 class NewContact extends React.Component {
 	constructor() {
@@ -17,15 +18,14 @@ class NewContact extends React.Component {
 
   render() {
 		const { contact } = this.state;
-		const headerAction = { action: () => this.save(), name: 'Guardar' };
   	return(
 			<div className='contacts-new'>
 				<Header
 					title='Nuevo Contacto'
 					back="/contactos"
-					action={ headerAction }/>
+					action={ () => this.save() }
+          actionName="Guardar" />
 				<div className="container">
-					<h1>Formulario Contacto</h1>
 					<ContactForm contact={ contact }/>
 				</div>
   		</div>

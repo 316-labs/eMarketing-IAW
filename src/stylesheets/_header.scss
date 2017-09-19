@@ -1,14 +1,26 @@
 .header {
-	background-color: lightgray;
+	background-color: $sidebar-background-color;
 	padding: 10px 20px;
-	
+
 	.row {
 		margin: 0;
 	}
-	
+
+  .back {
+    color: white;
+    vertical-align: middle;
+    line-height: 36px;
+    transition: 0.3s ease;
+
+    &:hover {
+      color: $secondary-color;
+    };
+  }
+
 	h1 {
 		font-size: 30px;
 		margin: 0;
 		font-variant: small-caps;
+    color: white;
 	}
 }

@@ -12,31 +12,28 @@ import ContactsIndex from './components/contacts/ContactsIndex';
 import NewContact from './components/contacts/NewContact';
 import Tags from './components/contacts/Tags';
 import './stylesheets/App.css';
+import WelcomeImage from './welcome-image.jpeg';
+import LogoImage from './logo.png';
 
 class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			authorized: false,
+			authorized: true,
+			userId: '',
 		}
 	}
 
 
 	authorize(email, password) {
-		// const config = {
-// 			url: '/api/v1/sign_in',
-// 			method: 'post',
-// 			data: {
-// 				email,
-// 				password
-// 			}
-// 		}
-// 		$.ajax(config)
-// 			.success(response => this.setState(authorized: true))
-// 			.error(response => this.setState(authorized: false))
+		console.log('hola authorizing');
+		this.setState({ authorized: true });
 	}
 
 
+  logout() {
+    this.setState({ authorized: false });
+  }
 
 
 	render() {
@@ -44,31 +41,38 @@ class App extends React.Component {
 		let authorizedRoutes;
 		if (authorized) {
 			authorizedRoutes = (
-				<Switch>
-					<div className="emarketing">
-						<Sidebar />
-						<main>
-							<Route exact path='/' component={ Dashboard } />
-							<Route exact path='/campañas' component={ CampaignsIndex } />
-							<Route path='/campañas/nueva' component={ NewCampaign } />
-							<Route path='/campañas/ver' component={ ShowCampaign } />
-							<Route exact path='/contactos' component={ ContactsIndex } />
-							<Route path='/contactos/nuevo' component={ NewContact } />
-							<Route path='/contactos/etiquetas' component={ Tags } />
-						</main>
-					</div>
-				</Switch>
+  			<div className="emarketing">
+  				<Sidebar logout={ () => this.logout() } />
+  				<main>
+            <Switch>
+  						<Route exact path='/' component={ Dashboard } />
+  						<Route exact path='/campañas' component={ CampaignsIndex } />
+  						<Route path='/campañas/nueva' component={ NewCampaign } />
+  						<Route path='/campañas/ver' component={ ShowCampaign } />
+  						<Route exact path='/contactos' component={ ContactsIndex } />
+  						<Route path='/contactos/nuevo' component={ NewContact } />
+  						<Route path='/contactos/etiquetas' component={ Tags } />
+  						<Route path='/perfil/editar' component={ EditUser } />
+      	    </Switch>
+  				</main>
+  			</div>
 			);
 		} else {
 			authorizedRoutes = (
-				<Switch>
-					<div className="emarketing">
-						<main>
-							<Route exact path='/' component={ Login } />
-							<Route path='/register' component={ Register } />
-						</main>
+				<div className="emarketing unauthorized">
+					<div className="half welcome-image">
+						<img src={ WelcomeImage } alt='welcome'/>
 					</div>
-				</Switch>
+					<div className="half views">
+						<div className='logo center'><img src={ LogoImage } alt="emarketing" /></div>
+						<Switch>
+							<Route exact path='/' render={ () =>
+								(<Login authorize={ () => this.authorize() }/>)
+							} />
+							<Route path='/registrarme' component={ Register } />
+						</Switch>
+					</div>
+				</div>
 			);
 		}
 		return (
