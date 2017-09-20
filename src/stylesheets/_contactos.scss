@@ -9,6 +9,7 @@
   .contacto-index {
     border: 1px solid color("grey", "base");
     margin-bottom: 15px;
+    position: relative;
 
     .row {
       margin: 0;
@@ -26,10 +27,12 @@
     }
 
     .badge {
-      position: relative;
+      position: absolute;
       background-color: color("blue-grey", "base");
       color: white;
-      height: 170px;
+      height: 100%;
+      padding: 0 0.5em;
+      margin-left: 10px;
       text-align: center;
       font-size: 2em;
 
@@ -37,10 +40,22 @@
       flex-direction: column;
       justify-content: center;
     }
+
+    .actions {
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
   }
 
   .buscar-contacto {
     border: 1px solid color("grey", "base");
     padding: 10px;
+  }
+}
+
+.contacts-new {
+  .container {
+    margin-top: 15px;
   }
 }

@@ -32,11 +32,12 @@ export default class ContactForm extends React.Component {
             <Input s={12} name="email" value={ email } label="Email" onChange={ (e) => this.handleChange(e) }/>
             <Input s={12} name="email_confirmation" value={ emailConfirmation } label="Email Confirmation" onChange={ (e) => this.handleChange(e) }/>
             <Input s={12} name="phone" value={ phone } label="Teléfono" onChange={ (e) => this.handleChange(e) }/>
-            <Input s={12} name="country" value={ first_name } label="País" onChange={ (e) => this.handleChange(e) }/>
-
+            <Input s={6} name="country" value={ first_name } label="País" onChange={ (e) => this.handleChange(e) }/>
+            <Input s={6} name="city" value={ city } label="Ciudad" onChange={ (e) => this.handleChange(e) }/>
+            <Input s={12} name="tags" value={ tags } label="Etiquetas" onChange={ (e) => this.handleChange(e) }/>
           </Col>
           <Col s={12} m={4}>
-
+            <Input s={12} name="campaigns" value={ campaigns } label="Campañas" onChange={ (e) => this.handleChange(e) }/>
           </Col>
         </Row>
 			</div>

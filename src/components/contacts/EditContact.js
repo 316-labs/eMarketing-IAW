@@ -5,13 +5,47 @@ import { ProgressBar } from 'react-materialize';
 import $ from 'jquery';
 import { notify } from 'react-notify-toast';
 
-export default class NewContact extends React.Component {
-	constructor() {
-		super();
+export default class EditContact extends React.Component {
+	constructor(props) {
+		super(props);
 		this.state = {
-			contacto: {}
+			contacto: props.contacto
 		}
 	}
+
+
+  componentDidMount() {
+    this.fetchContacto();
+  }
+
+
+  fetchContacto() {
+    this.setState({
+      isLoading: true
+    });
+
+    const id = this.props.match.params.id;
+    $.ajax({
+      url: `localhost:5000/api/v1/contacts/${ id }`,
+      method: 'GET'
+    })
+      .always(response => {
+        this.setState({
+          isLoading: false
+        })
+      })
+      .done(response => {
+        this.setState({
+          contacto: response
+        })
+      })
+      .fail(response => {
+        this.setState({
+          error: true
+        })
+        notify.show("Ocurrió un error al obtener el contacto.", 'error');
+      })
+  }
 
 	save() {
     this.setState({
@@ -22,7 +56,7 @@ export default class NewContact extends React.Component {
     // const contacto = this.state.contacto;
     // $.ajax({
     //   url: 'localhost:5000/api/v1/contacts',
-    //   method: 'POST',
+    //   method: 'PUT',
     //   data: {
     //     contacto
     //   }
@@ -31,7 +65,7 @@ export default class NewContact extends React.Component {
     //     this.setState({
     //       isLoading: false,
     //     });
-    //     notify.show('Contacto creado exitosamente', 'success');
+    //     notify.show('Contacto actualizado exitosamente', 'success');
     //     this.props.history.push('/contactos');
     //   })
     //   .fail(response => {
@@ -44,17 +78,18 @@ export default class NewContact extends React.Component {
     //   })
 
     setTimeout(() => {
-      notify.show('Contacto creado exitósamente', 'success');
+      notify.show('Contacto actualizado exitosamente', 'success');
       this.props.history.push('/contactos');
     }, 2000);
 	}
 
   render() {
+    const id = this.props.match.params.id;
 		const { contacto, isLoading, error, errorMessages } = this.state;
   	return(
 			<div className='contacts-new'>
 				<Header
-					title='Nuevo Contacto'
+          title={ `Editar Contacto ${ id }` }
 					back="/contactos"
 					action={ () => this.save() }
           actionName="Guardar" />

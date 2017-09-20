@@ -10,16 +10,18 @@ import ShowCampaign from './components/campaigns/ShowCampaign';
 import NewCampaign from './components/campaigns/NewCampaign';
 import ContactsIndex from './components/contacts/ContactsIndex';
 import NewContact from './components/contacts/NewContact';
+import EditContact from './components/contacts/EditContact';
 import Tags from './components/contacts/Tags';
 import './stylesheets/App.css';
 import WelcomeImage from './welcome-image.jpeg';
 import LogoImage from './logo.png';
+import Notifications, { notify } from 'react-notify-toast';
 
-class App extends React.Component {
+export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			authorized: false,
+			authorized: true,
 			userId: '',
 		}
 	}
@@ -51,6 +53,7 @@ class App extends React.Component {
   						<Route path='/campañas/ver' component={ ShowCampaign } />
   						<Route exact path='/contactos' component={ ContactsIndex } />
   						<Route path='/contactos/nuevo' component={ NewContact } />
+              <Route path='/contactos/:id/editar' component={ EditContact } />
   						<Route path='/contactos/etiquetas' component={ Tags } />
   						<Route path='/perfil/editar' component={ EditUser } />
       	    </Switch>
@@ -76,11 +79,12 @@ class App extends React.Component {
 			);
 		}
 		return (
-			<Router>
-				{ authorizedRoutes }
-			</Router>
+      <div className="app">
+        <Notifications />
+  			<Router>
+  				{ authorizedRoutes }
+  			</Router>
+      </div>
 		);
 	}
 }
-
-export default App;

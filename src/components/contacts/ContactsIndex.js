@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
-import { Button, Icon , Preloader, Input, Row, Col } from 'react-materialize';
+import { Button, Icon , ProgressBar, Input, Row, Col } from 'react-materialize';
 import ContactIndex from './ContactIndex';
 import $ from 'jquery';
 
@@ -103,7 +103,7 @@ class ContactsIndex extends React.Component {
               {
                 isLoading ?
                   <div className="center">
-                    <Preloader />
+                    <ProgressBar />
                   </div>
                 :
                   contactos.map(this.renderContacto)
