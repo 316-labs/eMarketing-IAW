@@ -1,6 +1,7 @@
 .sidebar-btn {
   padding: 20px 20px;
-  background-color: $sidebar-dark-color;
+  width: 200px;
+  background: $sidebar-dark-color;
   transition: 0.3s ease;
   color: white;
   border: none;
@@ -15,6 +16,7 @@
 	position: absolute;
 	width: $sidebar-width;
   background-color: $sidebar-background-color;
+  height: 100%;
 
   .logo {
     width: 100%;
@@ -36,7 +38,9 @@
 
   ul {
     li {
-      padding: 20px 0px;
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
       a {
         @extend .sidebar-btn;
 
@@ -48,8 +52,9 @@
   }
 
   .crear-campana {
-    margin-top: 60px;
-    padding: 20px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
     a {
       @extend .sidebar-btn;
 

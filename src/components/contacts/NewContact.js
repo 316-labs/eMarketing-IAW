@@ -19,35 +19,42 @@ export default class NewContact extends React.Component {
     });
 
     // Manejo asincrónico de creación de contacto
-    // const contacto = this.state.contacto;
-    // $.ajax({
-    //   url: 'localhost:5000/api/v1/contacts',
-    //   method: 'POST',
-    //   data: {
-    //     contacto
-    //   }
-    // })
-    //   .done(response => {
-    //     this.setState({
-    //       isLoading: false,
-    //     });
-    //     notify.show('Contacto creado exitosamente', 'success');
-    //     this.props.history.push('/contactos');
-    //   })
-    //   .fail(response => {
-    //     this.setState({
-    //       isLoading: false,
-    //       error: true,
-    //       errorMessages: response
-    //     });
-    //     notify.show('Ocurrió un error. Revisa el formulario e intenta nuevamente', 'error');
-    //   })
-
-    setTimeout(() => {
-      notify.show('Contacto creado exitósamente', 'success');
-      this.props.history.push('/contactos');
-    }, 2000);
+    const contact = this.state.contacto;
+    $.ajax({
+      url: 'http://localhost:3000/v1/contacts',
+      method: 'POST',
+      data: {
+        contact
+      }
+    })
+      .done(response => {
+        this.setState({
+          isLoading: false,
+        });
+        notify.show('Contacto creado exitosamente', 'success');
+        this.props.history.push('/contactos');
+      })
+      .fail(response => {
+        this.setState({
+          isLoading: false,
+          error: true,
+          errorMessages: response
+        });
+        notify.show('Ocurrió un error. Revisa el formulario e intenta nuevamente', 'error');
+      })
 	}
+
+
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    var contacto = this.state.contacto;
+    contacto[name] = value;
+    this.setState({
+      contacto
+    });
+  }
+
 
   render() {
 		const { contacto, isLoading, error, errorMessages } = this.state;
@@ -67,6 +74,7 @@ export default class NewContact extends React.Component {
 					<ContactForm
             contacto={ contacto }
             isLoading={ isLoading }
+            handleChange={ (e) => this.handleChange(e) }
             error={ error }/>
 				</div>
   		</div>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Icon , ProgressBar, Input, Row, Col } from 'react-materialize';
 import ContactIndex from './ContactIndex';
 import $ from 'jquery';
+import { notify } from 'react-notify-toast';
 
 class ContactsIndex extends React.Component {
   constructor() {
@@ -19,35 +20,35 @@ class ContactsIndex extends React.Component {
       isLoading: true
     })
 
-    const fakeContacts = [
-      { id: "1", first_name: "Luis", last_name: "Diozquericcio", email: "lucho.d@gmail.com", phone: "+54-221-2236534", etiquetas: ["Deporte", "Joven", "Electrónica", "Informática"] },
-      { id: "2", first_name: "Esteban", last_name: "Mascalzonne", email: "estebanquito@hotmail.com", phone: "+54-221-56732142", etiquetas: ["Música", "Política", "Aviación", "Arte", "Moda", "Cultura"] },
-      { id: "3", first_name: "Andrea", last_name: "Martinata", email: "martinandrea@aol.com", phone: "+54-221-1993824", etiquetas: ["Joven", "Electrónica", "Informática", "Arte", "Recitales"] }
-    ];
+    // const fakeContacts = [
+    //   { id: "1", first_name: "Luis", last_name: "Diozquericcio", email: "lucho.d@gmail.com", phone: "+54-221-2236534", etiquetas: ["Deporte", "Joven", "Electrónica", "Informática"] },
+    //   { id: "2", first_name: "Esteban", last_name: "Mascalzonne", email: "estebanquito@hotmail.com", phone: "+54-221-56732142", etiquetas: ["Música", "Política", "Aviación", "Arte", "Moda", "Cultura"] },
+    //   { id: "3", first_name: "Andrea", last_name: "Martinata", email: "martinandrea@aol.com", phone: "+54-221-1993824", etiquetas: ["Joven", "Electrónica", "Informática", "Arte", "Recitales"] }
+    // ];
 
-    setTimeout(() => this.setState({
-      contactos: fakeContacts,
-      isLoading: false
-    }), 2000);
+    // setTimeout(() => this.setState({
+    //   contactos: fakeContacts,
+    //   isLoading: false
+    // }), 2000);
 
-    // // The following method fetchs the contacts from an API and uses promises and callbacks implemented by jQuery
-    // $.ajax({
-    //   url: 'http://localhost:5000/api/v1/contacts',
-    //   method: 'get'
-    // })
-    //   .done(response => {
-    //     this.setState({
-    //       contactos: response,
-    //       isLoading: false,
-    //       error: false
-    //     });
-    //   })
-    //   .fail(response => {
-    //     this.setState({
-    //       isLoading: false,
-    //       error: true
-    //     })
-    //   })
+    // The following method fetchs the contacts from an API and uses promises and callbacks implemented by jQuery
+    $.ajax({
+      url: 'http://localhost:3000/v1/contacts',
+      method: 'get'
+    })
+      .done(response => {
+        this.setState({
+          contactos: response,
+          isLoading: false,
+          error: false
+        });
+      })
+      .fail(response => {
+        this.setState({
+          isLoading: false,
+          error: true
+        })
+      })
   }
 
 
@@ -56,8 +57,40 @@ class ContactsIndex extends React.Component {
   }
 
 
+  handleSearchChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+
 	buscarContacto() {
-		console.log('buscando contacto');
+    this.setState({
+      isLoading: true
+    });
+    const { email, name, tags } = this.state;
+    const data = {
+      email,
+      name,
+      tags
+    };
+    $.ajax({
+      url: 'localhost:5000/api/v1/contacts/search',
+      method: 'POST',
+      data: data
+    })
+      .done(response => {
+        this.setState({
+          isLoading: false,
+          contactos: response,
+        })
+      })
+      .fail(response => {
+        notify.show('Ocurrió un error inesperado al buscar el contacto', 'error');
+        this.setState({
+          isLoading: false,
+        })
+      })
 	}
 
 
@@ -73,7 +106,9 @@ class ContactsIndex extends React.Component {
     return(
       <div className="buscar-contacto">
         <h5>Buscar contacto</h5>
-        <Input type="text" name="nombre" label="Nombre"/>
+        <Input type="text" name="name" label="Nombre" onChange={ (e) => this.handleSearchChange(e) } />
+        <Input type="text" name="email" label="Email" onChange={ (e) => this.handleSearchChange(e) } />
+        <Input type="text" name="tags" label="Etiquetas" onChange={ (e) => this.handleSearchChange(e) } />
         <Button className="blue-grey darken-1" onClick={ () => this.buscarContacto() }>Buscar</Button>
       </div>
     )

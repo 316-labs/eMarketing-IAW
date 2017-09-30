@@ -6912,7 +6912,8 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .sidebar-btn, .sidebar ul li a, .sidebar .crear-campana a, .sidebar .salir a {
   padding: 20px 20px;
-  background-color: #424242;
+  width: 200px;
+  background: #424242;
   transition: 0.3s ease;
   color: white;
   border: none; }
@@ -6923,7 +6924,8 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 .sidebar {
   position: absolute;
   width: 200px;
-  background-color: #212121; }
+  background-color: #212121;
+  height: 100%; }
   .sidebar .logo {
     width: 100%;
     text-align: center;
@@ -6937,12 +6939,15 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
       width: 45%;
       padding: 5px; }
   .sidebar ul li {
-    padding: 20px 0px; }
+    display: flex;
+    flex-direction: row;
+    justify-content: left; }
     .sidebar ul li a:hover {
       padding: 20px 60px; }
   .sidebar .crear-campana {
-    margin-top: 60px;
-    padding: 20px 0px; }
+    display: flex;
+    flex-direction: row;
+    justify-content: left; }
     .sidebar .crear-campana a {
       background-color: #4b626d; }
       .sidebar .crear-campana a:hover {
@@ -6990,7 +6995,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     background-color: #607d8b;
     color: white;
     height: 100%;
-    padding: 0 0.5em;
+    width: 60px;
     margin-left: 10px;
     text-align: center;
     font-size: 2em;
