@@ -289,3 +289,11 @@ button.btn-floating {
 .btn-block {
   display: block;
 }
+
+//Custom btn outline
+.btn-outline {
+  border: 1px solid $secondary-color;
+  background: none;
+  color: black;
+  box-shadow: none;
+}

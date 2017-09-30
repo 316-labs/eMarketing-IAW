@@ -18,18 +18,7 @@ class ContactsIndex extends React.Component {
   fetchContactos() {
     this.setState({
       isLoading: true
-    })
-
-    // const fakeContacts = [
-    //   { id: "1", first_name: "Luis", last_name: "Diozquericcio", email: "lucho.d@gmail.com", phone: "+54-221-2236534", etiquetas: ["Deporte", "Joven", "Electrónica", "Informática"] },
-    //   { id: "2", first_name: "Esteban", last_name: "Mascalzonne", email: "estebanquito@hotmail.com", phone: "+54-221-56732142", etiquetas: ["Música", "Política", "Aviación", "Arte", "Moda", "Cultura"] },
-    //   { id: "3", first_name: "Andrea", last_name: "Martinata", email: "martinandrea@aol.com", phone: "+54-221-1993824", etiquetas: ["Joven", "Electrónica", "Informática", "Arte", "Recitales"] }
-    // ];
-
-    // setTimeout(() => this.setState({
-    //   contactos: fakeContacts,
-    //   isLoading: false
-    // }), 2000);
+    });
 
     // The following method fetchs the contacts from an API and uses promises and callbacks implemented by jQuery
     $.ajax({

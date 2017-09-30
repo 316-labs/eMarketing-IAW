@@ -3855,6 +3855,12 @@ button.btn-floating {
 .btn-block {
   display: block; }
 
+.btn-outline {
+  border: 1px solid #fb8c00;
+  background: none;
+  color: black;
+  box-shadow: none; }
+
 .dropdown-content {
   background-color: #fff;
   margin: 0;
@@ -7013,6 +7019,11 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .contacts-new .container {
   margin-top: 15px; }
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
 
 html {
   font-family: 'Fira Sans', sans-serif; }

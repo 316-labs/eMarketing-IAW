@@ -10,7 +10,7 @@ export default class ContactIndex extends React.Component {
   renderEtiqueta(etiqueta) {
     const id = this.props.contacto.id;
     return(
-      <li key={ `${ etiqueta }-${ id }` }>{ etiqueta }</li>
+      <li key={ `${ etiqueta.name }-${ id }` }>{ etiqueta.name }</li>
     )
   }
 
@@ -41,7 +41,7 @@ export default class ContactIndex extends React.Component {
 
 
   render() {
-    const { id, first_name, last_name, email, phone, etiquetas } = this.props.contacto;
+    const { id, first_name, last_name, email, phone, tags } = this.props.contacto;
     return (
       <div className="contacto-index">
         <Row>
@@ -57,7 +57,7 @@ export default class ContactIndex extends React.Component {
           <Col s={4}>
             <p><span className="campo">Etiquetas</span></p>
             <ul>
-              { _.take(etiquetas, 5).map(etiqueta => this.renderEtiqueta(etiqueta)) }
+              { _.take(tags, 5).map(tag => this.renderEtiqueta(tag)) }
             </ul>
           </Col>
           <div className="actions">
