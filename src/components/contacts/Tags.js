@@ -1,13 +1,15 @@
 import React from 'react';
 import Header from '../Header';
 import $ from 'jquery';
-import { Table, Button, ProgressBar } from 'react-materialize';
+import { Table, Button, ProgressBar, Input } from 'react-materialize';
+import { notify } from 'react-notify-toast';
 
 class Tags extends React.Component {
   constructor() {
     super();
     this.state = {
-      tags: []
+      tags: [],
+      editTagId: ''
     }
   }
 
@@ -39,8 +41,12 @@ class Tags extends React.Component {
   }
 
 
-  handleEditButton() {
-    console.log('edit');
+  handleEditButton(tagId) {
+    this.setState({
+      editTagId: tagId,
+      error: false
+    });
+    console.log('edit' + tagId);
   }
 
 
@@ -49,16 +55,70 @@ class Tags extends React.Component {
   }
 
 
+  handleTagName(e) {
+    const editTagId = this.state.editTagId;
+    const name = e.target.value;
+    const tags = this.state.tags;
+    var editedTag = tags.find(tag => tag.id == editTagId);
+    if (editedTag.name != name) {
+      $.ajax({
+        url: `http://localhost:3000/v1/tags/${ editTagId }`,
+        method: 'put',
+        data: {
+          tag: {
+            name
+          }
+        }
+      })
+        .done(response => {
+          editedTag.name = name;
+          this.setState({
+            successId: editTagId,
+            tags,
+            error: false
+          });
+          notify.show('Etiqueta actualizada correctamente', 'success');
+        })
+        .fail(response => {
+          this.setState({
+            error: true
+          })
+        })
+    }
+  }
+
+
+  renderNameOrField(tag) {
+    const { editTagId, error } = this.state;
+    if (tag.id == editTagId) {
+      return(
+        <Input
+          autoFocus='true'
+          name='name'
+          defaultValue={ tag.name }
+          onBlur={ (e) => this.handleTagName(e) }
+          error={ error }/>
+      );
+    } else {
+      return(
+        tag.name
+      );
+    }
+  }
+
   renderTag(tag) {
+    const { editTagId, error, successId } = this.state;
     return (
       <tr key={ tag.id }>
         <td>{ tag.id }</td>
-        <td>{ tag.name }</td>
+        <td className={ `${ successId == tag.id ? 'success' : '' } ${ (tag.id == editTagId && error) ? 'error' : '' }`}>
+          { this.renderNameOrField(tag) }
+        </td>
         <td>{ tag.contacts }</td>
         <td>{ tag.created_at }</td>
         <td className='actions'>
-          <Button className='btn btn-outline' waves='light' onClick={ () => this.handleEditButton() }>Editar</Button>
-          <Button className='btn btn-outline' waves='red' onClick={ () => this.handleDeleteButton() }>Eliminar</Button>
+          <Button className='btn btn-outline' waves='light' onClick={ () => this.handleEditButton(tag.id) }>Editar</Button>
+          <Button className='btn btn-outline' waves='red' onClick={ () => this.handleDeleteButton(tag.id) }>Eliminar</Button>
         </td>
       </tr>
     );

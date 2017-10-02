@@ -50,7 +50,7 @@ export default class App extends React.Component {
   						<Route exact path='/' component={ Dashboard } />
   						<Route exact path='/campañas' component={ CampaignsIndex } />
   						<Route path='/campañas/nueva' component={ NewCampaign } />
-  						<Route path='/campañas/ver' component={ ShowCampaign } />
+  						<Route path='/campañas/:id' component={ ShowCampaign } />
   						<Route exact path='/contactos' component={ ContactsIndex } />
   						<Route path='/contactos/nuevo' component={ NewContact } />
               <Route path='/contactos/:id/editar' component={ EditContact } />

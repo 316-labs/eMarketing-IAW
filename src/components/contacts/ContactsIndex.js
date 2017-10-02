@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
-import { Button, Icon , ProgressBar, Input, Row, Col } from 'react-materialize';
+import { Button, Icon , ProgressBar, Input, Row, Col, Card } from 'react-materialize';
 import ContactIndex from './ContactIndex';
 import $ from 'jquery';
+import _ from 'lodash';
 import { notify } from 'react-notify-toast';
 
 class ContactsIndex extends React.Component {
@@ -57,29 +58,34 @@ class ContactsIndex extends React.Component {
     this.setState({
       isLoading: true
     });
-    const { email, name, tags } = this.state;
-    const data = {
-      email,
-      name,
-      tags
-    };
-    $.ajax({
-      url: 'localhost:5000/api/v1/contacts/search',
-      method: 'POST',
-      data: data
-    })
-      .done(response => {
-        this.setState({
-          isLoading: false,
-          contactos: response,
-        })
+    const { nameOrEmail, tags } = this.state;
+    if (_.isEmpty(nameOrEmail) && _.isEmpty(tags)) {
+      this.fetchContactos();
+    } else {
+      const contact = {
+        name_or_email: nameOrEmail,
+        tags
+      };
+      $.ajax({
+        url: 'http://localhost:3000/v1/contacts/search',
+        method: 'GET',
+        data: {
+          contact
+        }
       })
-      .fail(response => {
-        notify.show('Ocurrió un error inesperado al buscar el contacto', 'error');
-        this.setState({
-          isLoading: false,
+        .done(response => {
+          this.setState({
+            isLoading: false,
+            contactos: response,
+          })
         })
-      })
+        .fail(response => {
+          notify.show('Ocurrió un error inesperado al buscar el contacto', 'error');
+          this.setState({
+            isLoading: false,
+          })
+        })
+    }
 	}
 
 
@@ -95,8 +101,7 @@ class ContactsIndex extends React.Component {
     return(
       <div className="buscar-contacto">
         <h5>Buscar contacto</h5>
-        <Input type="text" name="name" label="Nombre" onChange={ (e) => this.handleSearchChange(e) } />
-        <Input type="text" name="email" label="Email" onChange={ (e) => this.handleSearchChange(e) } />
+        <Input type="text" name="nameOrEmail" label="Nombre o email" onChange={ (e) => this.handleSearchChange(e) } />
         <Input type="text" name="tags" label="Etiquetas" onChange={ (e) => this.handleSearchChange(e) } />
         <Button className="blue-grey darken-1" onClick={ () => this.buscarContacto() }>Buscar</Button>
       </div>
@@ -131,6 +136,10 @@ class ContactsIndex extends React.Component {
                   </div>
                 :
                   contactos.map(this.renderContacto)
+              }
+              {
+                (!isLoading && _.isEmpty(contactos)) &&
+                  <Card title='No hay contactos 😢'>Intenta con otros parámetros de búsqueda</Card>
               }
             </Col>
             <Col s={12} m={4}>
