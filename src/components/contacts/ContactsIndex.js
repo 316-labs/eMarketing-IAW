@@ -24,6 +24,9 @@ class ContactsIndex extends React.Component {
     // The following method fetchs the contacts from an API and uses promises and callbacks implemented by jQuery
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
+      headers: {
+        'Authorization': 'Bearer ' + this.props.accessKey
+      },
       method: 'get'
     })
       .done(response => {

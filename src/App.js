@@ -16,21 +16,57 @@ import './stylesheets/App.css';
 import WelcomeImage from './welcome-image.jpeg';
 import LogoImage from './logo.png';
 import Notifications, { notify } from 'react-notify-toast';
+import $ from 'jquery';
 
 export default class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			authorized: true,
-			userId: '',
+			authorized: false,
+      authorizeError: false,
+      isLoading: false,
+			accessKey: '',
 		}
 	}
 
 
 	authorize(email, password) {
-		console.log('hola authorizing');
-		this.setState({ authorized: true });
+		this.setState({ isLoading: true });
+    let config = {
+      url: `${process.env.REACT_APP_API_HOST}/user_token`,
+      method: 'post',
+      data: {
+        auth: {
+          email,
+          password
+        }
+      }
+    };
+    $.ajax(config)
+      .done(response => this.onAuthorizeSuccess(response))
+      .fail(response => this.onAuthorizeFail(response))
 	}
+
+
+  onAuthorizeSuccess(response) {
+    this.setState({
+      isLoading: false,
+      authorized: true,
+      accessKey: response.jwt,
+      authorizeError: false
+    });
+  }
+
+
+  onAuthorizeFail(response) {
+    console.log(response);
+    this.setState({
+      isLoading: false,
+      authorized: false,
+      accessKey: '',
+      authorizeError: true
+    });
+  }
 
 
   logout() {
@@ -39,7 +75,10 @@ export default class App extends React.Component {
 
 
 	render() {
-		const { authorized } = this.state;
+		const { authorized, authorizeError, isLoading, accessKey } = this.state;
+    const props = {
+      accessKey
+    }
 		let authorizedRoutes;
 		if (authorized) {
 			authorizedRoutes = (
@@ -51,7 +90,9 @@ export default class App extends React.Component {
   						<Route exact path='/campañas' component={ CampaignsIndex } />
   						<Route path='/campañas/nueva' component={ NewCampaign } />
   						<Route path='/campañas/:id' component={ ShowCampaign } />
-  						<Route exact path='/contactos' component={ ContactsIndex } />
+  						<Route exact path='/contactos' render={ () => (
+  						  <ContactsIndex accessKey={ accessKey } />
+  						)} />
   						<Route path='/contactos/nuevo' component={ NewContact } />
               <Route path='/contactos/:id/editar' component={ EditContact } />
   						<Route path='/contactos/etiquetas' component={ Tags } />
@@ -69,10 +110,13 @@ export default class App extends React.Component {
 					<div className="half views">
 						<div className='logo center'><img src={ LogoImage } alt="emarketing" /></div>
 						<Switch>
-							<Route exact path='/' render={ () =>
-								(<Login authorize={ () => this.authorize() }/>)
-							} />
-							<Route path='/registrarme' component={ Register } />
+							<Route exact path='/registrarme' component={ Register } />
+							<Route path='/' render={ () => (
+                <Login
+                  authorize={ (e, p) => this.authorize(e, p) }
+                  authorizeError={ authorizeError }
+                  isLoading={ isLoading }/>
+              )} />
 						</Switch>
 					</div>
 				</div>
