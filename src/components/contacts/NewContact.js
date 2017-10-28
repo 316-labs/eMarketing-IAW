@@ -21,7 +21,7 @@ export default class NewContact extends React.Component {
     // Manejo asincrónico de creación de contacto
     const contact = this.state.contacto;
     $.ajax({
-      url: 'http://localhost:3000/v1/contacts',
+      url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
       method: 'POST',
       data: {
         contact

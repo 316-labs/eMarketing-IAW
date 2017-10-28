@@ -22,7 +22,7 @@ class Tags extends React.Component {
   fetchTags() {
     this.setState({ isLoading: true });
     $.ajax({
-      url: 'http://localhost:3000/v1/tags',
+      url: `${process.env.REACT_APP_API_HOST}/v1/tags`,
       method: 'get'
     })
       .done(response => {
@@ -62,7 +62,7 @@ class Tags extends React.Component {
     var editedTag = tags.find(tag => tag.id == editTagId);
     if (editedTag.name != name) {
       $.ajax({
-        url: `http://localhost:3000/v1/tags/${ editTagId }`,
+        url: `${process.env.REACT_APP_API_HOST}/v1/tags/${ editTagId }`,
         method: 'put',
         data: {
           tag: {
