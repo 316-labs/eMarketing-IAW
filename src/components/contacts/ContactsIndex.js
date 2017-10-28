@@ -23,7 +23,7 @@ class ContactsIndex extends React.Component {
 
     // The following method fetchs the contacts from an API and uses promises and callbacks implemented by jQuery
     $.ajax({
-      url: 'http://localhost:3000/v1/contacts',
+      url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
       method: 'get'
     })
       .done(response => {
@@ -67,7 +67,7 @@ class ContactsIndex extends React.Component {
         tags
       };
       $.ajax({
-        url: 'http://localhost:3000/v1/contacts/search',
+        url: `${process.env.REACT_APP_API_HOST}/v1/contacts/search`,
         method: 'GET',
         data: {
           contact

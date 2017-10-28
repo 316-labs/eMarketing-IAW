@@ -23,7 +23,7 @@ export default class ContactIndex extends React.Component {
     console.log('eliminar contacto');
     const { id } = this.props.contacto;
     $.ajax({
-      url: `localhost:5000/api/v1/contacts/${ id }`,
+      url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ id }`,
       method: 'DELETE'
     })
       .always(() => {

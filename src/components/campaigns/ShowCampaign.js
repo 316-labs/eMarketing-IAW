@@ -14,15 +14,15 @@ export default class ShowCampaign extends React.Component {
 
 
   componentDidMount() {
-    this.getCampana();
+    this.getCampaign();
   }
 
 
-  getCampana() {
+  getCampaign() {
     this.setState({ isLoading: true });
     const id = this.props.match.params.id;
     $.ajax({
-      url: `http://localhost:3000/v1/campaigns/${ id }`,
+      url: `${process.env.REACT_APP_API_HOST}/v1/campaigns/${ id }`,
       method: 'get'
     })
       .done(response => {
