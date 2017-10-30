@@ -52,8 +52,8 @@ class Login extends React.Component {
                 </div>
               :
                 [
-                  <Button className='login-button' onClick={ () => this.authorize() } disabled={ !valid }>Ingresar</Button>,
-						      <Link to='/registrarme' className='btn btn-flat btn-block'>Registrarme</Link>
+                  <Button key='login' className='login-button' onClick={ () => this.authorize() } disabled={ !valid }>Ingresar</Button>,
+						      <Link key='signup' to='/registrarme' className='btn btn-flat btn-block'>Registrarme</Link>
                 ]
             }
 					</Col>

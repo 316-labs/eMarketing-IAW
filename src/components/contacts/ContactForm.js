@@ -3,7 +3,7 @@ import { Row, Col, Input } from 'react-materialize';
 
 export default class ContactForm extends React.Component {
   render() {
-    const { id, first_name, last_name, email, phone, tags, country, city, campaigns } = this.props.contacto;
+    const { first_name, last_name, email, phone, tags, country, city, campaigns } = this.props.contacto;
     const { emailConfirmation } = this.props.contacto;
   	return(
 			<div className="form">

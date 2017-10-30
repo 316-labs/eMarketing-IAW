@@ -4,6 +4,7 @@ import ContactForm from './ContactForm';
 import { ProgressBar } from 'react-materialize';
 import $ from 'jquery';
 import { notify } from 'react-notify-toast';
+import PropTypes from 'prop-types';
 
 export default class EditContact extends React.Component {
 	constructor(props) {
@@ -19,6 +20,11 @@ export default class EditContact extends React.Component {
   }
 
 
+  static contextTypes = {
+    userToken: PropTypes.string
+  }
+
+
   fetchContacto() {
     this.setState({
       isLoading: true
@@ -27,6 +33,9 @@ export default class EditContact extends React.Component {
     const id = this.props.match.params.id;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ id }`,
+      headers: {
+        'Authorization': 'Bearer ' + this.context.userToken
+      },
       method: 'GET'
     })
       .always(response => {
@@ -56,6 +65,9 @@ export default class EditContact extends React.Component {
     const contact = this.state.contacto;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ contact.id }`,
+      headers: {
+        'Authorization': 'Bearer ' + this.context.userToken
+      },
       method: 'PUT',
       data: {
         contact
@@ -110,7 +122,8 @@ export default class EditContact extends React.Component {
             contacto={ contacto }
             isLoading={ isLoading }
             handleChange={ (e) => this.handleChange(e) }
-            error={ error }/>
+            error={ error }
+            errorMessages={ errorMessages }/>
 				</div>
   		</div>
 		);

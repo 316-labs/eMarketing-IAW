@@ -4,6 +4,7 @@ import ContactForm from './ContactForm';
 import { ProgressBar } from 'react-materialize';
 import $ from 'jquery';
 import { notify } from 'react-notify-toast';
+import PropTypes from 'prop-types';
 
 export default class NewContact extends React.Component {
 	constructor() {
@@ -12,6 +13,12 @@ export default class NewContact extends React.Component {
 			contacto: {}
 		}
 	}
+
+
+  static contextTypes = {
+    userToken: PropTypes.string
+  }
+
 
 	save() {
     this.setState({
@@ -22,6 +29,9 @@ export default class NewContact extends React.Component {
     const contact = this.state.contacto;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
+      headers: {
+        'Authorization': 'Bearer ' + this.context.userToken
+      },
       method: 'POST',
       data: {
         contact
@@ -75,7 +85,8 @@ export default class NewContact extends React.Component {
             contacto={ contacto }
             isLoading={ isLoading }
             handleChange={ (e) => this.handleChange(e) }
-            error={ error }/>
+            error={ error }
+            errorMessages={ errorMessages }/>
 				</div>
   		</div>
 		);
