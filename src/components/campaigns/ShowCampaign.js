@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../Header';
 import $ from 'jquery';
 import { Row, Col, ProgressBar } from 'react-materialize';
+import PropTypes from 'prop-types';
 
 export default class ShowCampaign extends React.Component {
   constructor() {
@@ -18,11 +19,19 @@ export default class ShowCampaign extends React.Component {
   }
 
 
+  static contextTypes = {
+    userToken: PropTypes.string
+  }
+
+
   getCampaign() {
     this.setState({ isLoading: true });
     const id = this.props.match.params.id;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/campaigns/${ id }`,
+      headers: {
+        'Authorization': 'Bearer ' + this.context.userToken
+      },
       method: 'get'
     })
       .done(response => {

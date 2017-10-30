@@ -4,8 +4,13 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import $ from 'jquery';
 import { notify } from 'react-notify-toast';
+import PropTypes from 'prop-types';
 
 export default class ContactIndex extends React.Component {
+  static contextTypes = {
+    userToken: PropTypes.string
+  }
+
 
   renderEtiqueta(etiqueta) {
     const id = this.props.contacto.id;
@@ -19,11 +24,12 @@ export default class ContactIndex extends React.Component {
     this.setState({
       isLoading: true
     });
-
-    console.log('eliminar contacto');
     const { id } = this.props.contacto;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ id }`,
+      headers: {
+        'Authorization': 'Bearer ' + this.context.userToken
+      },
       method: 'DELETE'
     })
       .always(() => {
@@ -62,10 +68,10 @@ export default class ContactIndex extends React.Component {
           </Col>
           <div className="actions">
             <Dropdown trigger={
-              <a href="#" className="orange-text text-darken-1"><Icon>more_vert</Icon></a>
+              <a className="orange-text text-darken-1"><Icon>more_vert</Icon></a>
             }>
               <NavItem><Link to={ `contactos/${ id }/editar` }>Editar</Link></NavItem>
-              <NavItem><a href="#" onClick={ () => this.eliminarContacto() }>Eliminar</a></NavItem>
+              <NavItem><a onClick={ () => this.eliminarContacto() }>Eliminar</a></NavItem>
             </Dropdown>
 
           </div>

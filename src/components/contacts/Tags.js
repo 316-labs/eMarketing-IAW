@@ -3,6 +3,7 @@ import Header from '../Header';
 import $ from 'jquery';
 import { Table, Button, ProgressBar, Input } from 'react-materialize';
 import { notify } from 'react-notify-toast';
+import PropTypes from 'prop-types';
 
 class Tags extends React.Component {
   constructor() {
@@ -19,10 +20,18 @@ class Tags extends React.Component {
   }
 
 
+  static contextTypes = {
+    userToken: PropTypes.string
+  }
+
+
   fetchTags() {
     this.setState({ isLoading: true });
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/tags`,
+      headers: {
+        'Authorization': 'Bearer ' + this.context.userToken
+      },
       method: 'get'
     })
       .done(response => {
@@ -59,10 +68,13 @@ class Tags extends React.Component {
     const editTagId = this.state.editTagId;
     const name = e.target.value;
     const tags = this.state.tags;
-    var editedTag = tags.find(tag => tag.id == editTagId);
-    if (editedTag.name != name) {
+    var editedTag = tags.find(tag => tag.id === editTagId);
+    if (editedTag.name !== name) {
       $.ajax({
         url: `${process.env.REACT_APP_API_HOST}/v1/tags/${ editTagId }`,
+        headers: {
+          'Authorization': 'Bearer ' + this.context.userToken
+        },
         method: 'put',
         data: {
           tag: {
@@ -90,7 +102,7 @@ class Tags extends React.Component {
 
   renderNameOrField(tag) {
     const { editTagId, error } = this.state;
-    if (tag.id == editTagId) {
+    if (tag.id === editTagId) {
       return(
         <Input
           autoFocus='true'
@@ -111,7 +123,7 @@ class Tags extends React.Component {
     return (
       <tr key={ tag.id }>
         <td>{ tag.id }</td>
-        <td className={ `${ successId == tag.id ? 'success' : '' } ${ (tag.id == editTagId && error) ? 'error' : '' }`}>
+        <td className={ `${ successId === tag.id ? 'success' : '' } ${ (tag.id === editTagId && error) ? 'error' : '' }`}>
           { this.renderNameOrField(tag) }
         </td>
         <td>{ tag.contacts }</td>

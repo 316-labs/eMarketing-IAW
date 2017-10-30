@@ -6,6 +6,7 @@ import ContactIndex from './ContactIndex';
 import $ from 'jquery';
 import _ from 'lodash';
 import { notify } from 'react-notify-toast';
+import PropTypes from 'prop-types';
 
 class ContactsIndex extends React.Component {
   constructor() {
@@ -13,6 +14,11 @@ class ContactsIndex extends React.Component {
     this.state = {
       contactos: []
     }
+  }
+
+
+  static contextTypes = {
+    userToken: PropTypes.string
   }
 
 
@@ -25,7 +31,7 @@ class ContactsIndex extends React.Component {
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
       headers: {
-        'Authorization': 'Bearer ' + this.props.accessKey
+        'Authorization': 'Bearer ' + this.context.userToken
       },
       method: 'get'
     })
@@ -71,6 +77,9 @@ class ContactsIndex extends React.Component {
       };
       $.ajax({
         url: `${process.env.REACT_APP_API_HOST}/v1/contacts/search`,
+        headers: {
+          'Authorization': 'Bearer ' + this.context.userToken
+        },
         method: 'GET',
         data: {
           contact
@@ -112,7 +121,7 @@ class ContactsIndex extends React.Component {
   }
 
   render() {
-    const { contactos, isLoading, error } = this.state;
+    const { contactos, isLoading } = this.state;
   	return(
 			<div className='contactos'>
 				<Header

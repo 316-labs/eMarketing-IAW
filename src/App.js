@@ -15,8 +15,9 @@ import Tags from './components/contacts/Tags';
 import './stylesheets/App.css';
 import WelcomeImage from './welcome-image.jpeg';
 import LogoImage from './logo.png';
-import Notifications, { notify } from 'react-notify-toast';
+import Notifications from 'react-notify-toast';
 import $ from 'jquery';
+import PropTypes from 'prop-types';
 
 export default class App extends React.Component {
 	constructor() {
@@ -25,9 +26,21 @@ export default class App extends React.Component {
 			authorized: false,
       authorizeError: false,
       isLoading: false,
-			accessKey: '',
+			userToken: '',
 		}
 	}
+
+
+  static childContextTypes = {
+    userToken: PropTypes.string
+  };
+
+
+  getChildContext() {
+    return {
+      userToken: this.state.userToken
+    }
+  }
 
 
 	authorize(email, password) {
@@ -52,7 +65,7 @@ export default class App extends React.Component {
     this.setState({
       isLoading: false,
       authorized: true,
-      accessKey: response.jwt,
+      userToken: response.jwt,
       authorizeError: false
     });
   }
@@ -63,7 +76,7 @@ export default class App extends React.Component {
     this.setState({
       isLoading: false,
       authorized: false,
-      accessKey: '',
+      userToken: '',
       authorizeError: true
     });
   }
@@ -75,10 +88,7 @@ export default class App extends React.Component {
 
 
 	render() {
-		const { authorized, authorizeError, isLoading, accessKey } = this.state;
-    const props = {
-      accessKey
-    }
+		const { authorized, authorizeError, isLoading, userToken } = this.state;
 		let authorizedRoutes;
 		if (authorized) {
 			authorizedRoutes = (
@@ -91,7 +101,7 @@ export default class App extends React.Component {
   						<Route path='/campañas/nueva' component={ NewCampaign } />
   						<Route path='/campañas/:id' component={ ShowCampaign } />
   						<Route exact path='/contactos' render={ () => (
-  						  <ContactsIndex accessKey={ accessKey } />
+  						  <ContactsIndex userToken={ userToken } />
   						)} />
   						<Route path='/contactos/nuevo' component={ NewContact } />
               <Route path='/contactos/:id/editar' component={ EditContact } />
