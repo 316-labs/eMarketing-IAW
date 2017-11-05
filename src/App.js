@@ -17,30 +17,18 @@ import WelcomeImage from './welcome-image.jpeg';
 import LogoImage from './logo.png';
 import Notifications from 'react-notify-toast';
 import $ from 'jquery';
-import PropTypes from 'prop-types';
 
 export default class App extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+    const userToken = sessionStorage.getItem('userToken');
 		this.state = {
-			authorized: false,
+			authorized: userToken && userToken.length > 0,
       authorizeError: false,
       isLoading: false,
-			userToken: '',
+			userToken
 		}
 	}
-
-
-  static childContextTypes = {
-    userToken: PropTypes.string
-  };
-
-
-  getChildContext() {
-    return {
-      userToken: this.state.userToken
-    }
-  }
 
 
 	authorize(email, password) {
@@ -62,12 +50,14 @@ export default class App extends React.Component {
 
 
   onAuthorizeSuccess(response) {
+    sessionStorage.setItem('userToken', response.jwt);
     this.setState({
       isLoading: false,
       authorized: true,
       userToken: response.jwt,
       authorizeError: false
     });
+
   }
 
 
@@ -82,13 +72,52 @@ export default class App extends React.Component {
   }
 
 
+  register(name, lastName, email, password) {
+    this.setState({ isLoading: true });
+    const config = {
+      url: `${process.env.REACT_APP_API_HOST}/v1/users`,
+      method: 'post',
+      data: {
+        user: {
+          name,
+          last_name: lastName,
+          email,
+          password
+        }
+      }
+    }
+    $.ajax(config)
+      .done(response => this.onRegisterSuccess(response, password))
+      .fail(response => this.onRegisterFail(response))
+  }
+
+
+  onRegisterSuccess(response, password) {
+    this.authorize(response.email, password);
+  }
+
+
+  onRegisterFail(response) {
+    this.setState({
+      isLoading: false,
+      authorized: false,
+      registerErrors: response.responseJSON
+    });
+  }
+
+
   logout() {
-    this.setState({ authorized: false });
+    sessionStorage.setItem('userToken', '');
+    this.setState({
+      authorized: false,
+      userToken: ''
+    });
+
   }
 
 
 	render() {
-		const { authorized, authorizeError, isLoading, userToken } = this.state;
+		const { authorized, authorizeError, isLoading, registerErrors } = this.state;
 		let authorizedRoutes;
 		if (authorized) {
 			authorizedRoutes = (
@@ -100,9 +129,7 @@ export default class App extends React.Component {
   						<Route exact path='/campañas' component={ CampaignsIndex } />
   						<Route path='/campañas/nueva' component={ NewCampaign } />
   						<Route path='/campañas/:id' component={ ShowCampaign } />
-  						<Route exact path='/contactos' render={ () => (
-  						  <ContactsIndex userToken={ userToken } />
-  						)} />
+              <Route exact path='/contactos' component={ ContactsIndex } />
   						<Route path='/contactos/nuevo' component={ NewContact } />
               <Route path='/contactos/:id/editar' component={ EditContact } />
   						<Route path='/contactos/etiquetas' component={ Tags } />
@@ -120,7 +147,12 @@ export default class App extends React.Component {
 					<div className="half views">
 						<div className='logo center'><img src={ LogoImage } alt="emarketing" /></div>
 						<Switch>
-							<Route exact path='/registrarme' component={ Register } />
+              <Route exact path='/registrarme' render={ () => (
+                <Register
+                  register={ (n, l, e, p) => this.register(n, l, e, p) }
+                  registerErrors={ registerErrors }
+                  isLoading={ isLoading } />
+              )} />
 							<Route path='/' render={ () => (
                 <Login
                   authorize={ (e, p) => this.authorize(e, p) }

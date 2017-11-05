@@ -30,7 +30,7 @@ class Tags extends React.Component {
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/tags`,
       headers: {
-        'Authorization': 'Bearer ' + this.context.userToken
+        'Authorization': 'Bearer ' + sessionStorage.userToken
       },
       method: 'get'
     })
@@ -73,7 +73,7 @@ class Tags extends React.Component {
       $.ajax({
         url: `${process.env.REACT_APP_API_HOST}/v1/tags/${ editTagId }`,
         headers: {
-          'Authorization': 'Bearer ' + this.context.userToken
+          'Authorization': 'Bearer ' + sessionStorage.userToken
         },
         method: 'put',
         data: {

@@ -7,7 +7,7 @@ class Dashboard extends React.Component {
 			<div>
 				<Header
 					title="Dashboard"/>
-				<div className="container">
+				<div className="container dashboard">
 					<h1>Dashboard</h1>
 				</div>
 			</div>

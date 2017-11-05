@@ -4,24 +4,19 @@ import ContactForm from './ContactForm';
 import { ProgressBar } from 'react-materialize';
 import $ from 'jquery';
 import { notify } from 'react-notify-toast';
-import PropTypes from 'prop-types';
 
 export default class EditContact extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			contacto: props.contacto
+			contacto: {},
+      selectedTags: []
 		}
 	}
 
 
   componentDidMount() {
     this.fetchContacto();
-  }
-
-
-  static contextTypes = {
-    userToken: PropTypes.string
   }
 
 
@@ -34,25 +29,23 @@ export default class EditContact extends React.Component {
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ id }`,
       headers: {
-        'Authorization': 'Bearer ' + this.context.userToken
+        'Authorization': 'Bearer ' + sessionStorage.userToken
       },
       method: 'GET'
     })
-      .always(response => {
-        this.setState({
-          isLoading: false
-        })
-      })
       .done(response => {
         this.setState({
-          contacto: response
+          contacto: response,
+          selectedTags: response.tag_ids,
+          isLoading: false
         })
       })
       .fail(response => {
         this.setState({
-          error: true
+          error: true,
+          isLoading: false
         })
-        notify.show("Ocurrió un error al obtener el contacto.", 'error');
+        notify.show('Ocurrió un error al obtener el contacto.', 'error');
       })
   }
 
@@ -62,11 +55,13 @@ export default class EditContact extends React.Component {
     });
 
     // Manejo asincrónico de creación de contacto
-    const contact = this.state.contacto;
+    let contact = this.state.contacto;
+    delete contact.tags;
+    contact.tag_ids = this.state.selectedTags;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ contact.id }`,
       headers: {
-        'Authorization': 'Bearer ' + this.context.userToken
+        'Authorization': 'Bearer ' + sessionStorage.userToken
       },
       method: 'PUT',
       data: {
@@ -102,17 +97,27 @@ export default class EditContact extends React.Component {
   }
 
 
+  handleTagChange(e) {
+    const name = e.target.name;
+    const selectedTags = [...e.target.selectedOptions].map(option => option.value);
+    this.setState({
+      selectedTags
+    })
+  }
+
+
   render() {
     const id = this.props.match.params.id;
-		const { contacto, isLoading, error, errorMessages } = this.state;
+		const { contacto, selectedTags, isLoading, error, errorMessages } = this.state;
   	return(
 			<div className='contacts-new'>
 				<Header
           title={ `Editar Contacto ${ id }` }
-					back="/contactos"
+					back='/contactos'
 					action={ () => this.save() }
-          actionName="Guardar" />
-				<div className="container">
+          actionName='Guardar'
+          actionClassName='save' />
+				<div className='container'>
           {
             isLoading &&
               <ProgressBar />
@@ -120,8 +125,10 @@ export default class EditContact extends React.Component {
 
 					<ContactForm
             contacto={ contacto }
+            selectedTags={ selectedTags }
             isLoading={ isLoading }
             handleChange={ (e) => this.handleChange(e) }
+            handleTagChange={ (e) => this.handleTagChange(e) }
             error={ error }
             errorMessages={ errorMessages }/>
 				</div>

@@ -30,7 +30,7 @@ export default class ShowCampaign extends React.Component {
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/campaigns/${ id }`,
       headers: {
-        'Authorization': 'Bearer ' + this.context.userToken
+        'Authorization': 'Bearer ' + sessionStorage.userToken
       },
       method: 'get'
     })

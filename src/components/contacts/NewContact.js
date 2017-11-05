@@ -10,14 +10,10 @@ export default class NewContact extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			contacto: {}
+			contacto: {},
+      selectedTags: []
 		}
 	}
-
-
-  static contextTypes = {
-    userToken: PropTypes.string
-  }
 
 
 	save() {
@@ -27,10 +23,12 @@ export default class NewContact extends React.Component {
 
     // Manejo asincrónico de creación de contacto
     const contact = this.state.contacto;
+    delete contact.tags;
+    contact.tag_ids = this.state.selectedTags;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
       headers: {
-        'Authorization': 'Bearer ' + this.context.userToken
+        'Authorization': 'Bearer ' + sessionStorage.userToken
       },
       method: 'POST',
       data: {
@@ -66,16 +64,26 @@ export default class NewContact extends React.Component {
   }
 
 
+  handleTagChange(e) {
+    const name = e.target.name;
+    const selectedTags = [...e.target.selectedOptions].map(option => option.value);
+    this.setState({
+      selectedTags
+    })
+  }
+
+
   render() {
 		const { contacto, isLoading, error, errorMessages } = this.state;
   	return(
 			<div className='contacts-new'>
 				<Header
 					title='Nuevo Contacto'
-					back="/contactos"
+					back='/contactos'
 					action={ () => this.save() }
-          actionName="Guardar" />
-				<div className="container">
+          actionName='Guardar'
+          actionClassName='save' />
+				<div className='container'>
           {
             isLoading &&
               <ProgressBar />
@@ -85,6 +93,7 @@ export default class NewContact extends React.Component {
             contacto={ contacto }
             isLoading={ isLoading }
             handleChange={ (e) => this.handleChange(e) }
+            handleTagChange={ (e) => this.handleTagChange(e) }
             error={ error }
             errorMessages={ errorMessages }/>
 				</div>

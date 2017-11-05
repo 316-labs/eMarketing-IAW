@@ -6,7 +6,6 @@ import ContactIndex from './ContactIndex';
 import $ from 'jquery';
 import _ from 'lodash';
 import { notify } from 'react-notify-toast';
-import PropTypes from 'prop-types';
 
 class ContactsIndex extends React.Component {
   constructor() {
@@ -17,12 +16,7 @@ class ContactsIndex extends React.Component {
   }
 
 
-  static contextTypes = {
-    userToken: PropTypes.string
-  }
-
-
-  fetchContactos() {
+  fetchContacts() {
     this.setState({
       isLoading: true
     });
@@ -31,7 +25,7 @@ class ContactsIndex extends React.Component {
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
       headers: {
-        'Authorization': 'Bearer ' + this.context.userToken
+        'Authorization': 'Bearer ' + sessionStorage.userToken
       },
       method: 'get'
     })
@@ -52,7 +46,7 @@ class ContactsIndex extends React.Component {
 
 
   componentDidMount() {
-    this.fetchContactos();
+    this.fetchContacts();
   }
 
 
@@ -69,7 +63,7 @@ class ContactsIndex extends React.Component {
     });
     const { nameOrEmail, tags } = this.state;
     if (_.isEmpty(nameOrEmail) && _.isEmpty(tags)) {
-      this.fetchContactos();
+      this.fetchContacts();
     } else {
       const contact = {
         name_or_email: nameOrEmail,
@@ -78,7 +72,7 @@ class ContactsIndex extends React.Component {
       $.ajax({
         url: `${process.env.REACT_APP_API_HOST}/v1/contacts/search`,
         headers: {
-          'Authorization': 'Bearer ' + this.context.userToken
+          'Authorization': 'Bearer ' + sessionStorage.userToken
         },
         method: 'GET',
         data: {
@@ -101,17 +95,16 @@ class ContactsIndex extends React.Component {
 	}
 
 
-  renderContacto(contacto) {
+  renderContacto(contacto, index) {
     return(
-      <ContactIndex contacto={ contacto } key={ contacto.id }/>
+      <ContactIndex contacto={ contacto } index={ index + 1 } history={ this.props.history } key={ contacto.id } />
     );
   }
 
 
   renderBuscarContacto() {
-
     return(
-      <div className="buscar-contacto">
+      <div className="search-contact">
         <h5>Buscar contacto</h5>
         <Input type="text" name="nameOrEmail" label="Nombre o email" onChange={ (e) => this.handleSearchChange(e) } />
         <Input type="text" name="tags" label="Etiquetas" onChange={ (e) => this.handleSearchChange(e) } />
@@ -123,7 +116,7 @@ class ContactsIndex extends React.Component {
   render() {
     const { contactos, isLoading } = this.state;
   	return(
-			<div className='contactos'>
+			<div className='contacts'>
 				<Header
 					title="Contactos"
 					back="/" />
@@ -147,7 +140,7 @@ class ContactsIndex extends React.Component {
                     <ProgressBar />
                   </div>
                 :
-                  contactos.map(this.renderContacto)
+                  contactos.map((contacto, index) => this.renderContacto(contacto, index))
               }
               {
                 (!isLoading && _.isEmpty(contactos)) &&
@@ -158,7 +151,7 @@ class ContactsIndex extends React.Component {
               { this.renderBuscarContacto() }
             </Col>
           </Row>
-					<Button floating large className='fixed-action-btn'><Link to='/contactos/nuevo'><Icon>add</Icon></Link></Button>
+					<Link to='/contactos/nuevo' className="btn-floating large fixed-action-btn" id="new-contact"><Icon>add</Icon></Link>
 				</div>
   		</div>
 		);
