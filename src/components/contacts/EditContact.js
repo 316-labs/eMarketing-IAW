@@ -98,7 +98,6 @@ export default class EditContact extends React.Component {
 
 
   handleTagChange(e) {
-    const name = e.target.name;
     const selectedTags = [...e.target.selectedOptions].map(option => option.value);
     this.setState({
       selectedTags

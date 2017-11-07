@@ -6,6 +6,7 @@
 
 @import 'contactos';
 @import 'tags';
+@import 'campaigns';
 
 html {
   font-family: 'Fira Sans', sans-serif;
@@ -23,4 +24,10 @@ body {
 		height: 100vh;
 		left: $sidebar-width;
 	}
+}
+
+.bottom-right-btn {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
 }

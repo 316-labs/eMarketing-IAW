@@ -1,0 +1,154 @@
+.campaigns {
+  .acciones {
+    .tags {
+      position: relative;
+      top: 15px;
+    }
+  }
+
+  .campaign-index {
+    border: 1px solid color("grey", "base");
+    margin-bottom: 15px;
+    position: relative;
+
+    .row {
+      margin: 0;
+    }
+
+    .field {
+      color: color("grey", "base");
+      font-size: 0.85em;
+    }
+
+    ul.contacto-info {
+      li {
+        margin-bottom: 15px;
+      }
+    }
+
+    .badge {
+      position: absolute;
+      background-color: color("blue-grey", "base");
+      color: white;
+      height: 100%;
+      width: 60px;
+      margin-left: 10px;
+      text-align: center;
+      font-size: 2em;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contacts {
+      position: absolute;
+      top: 0;
+      right: 5%;
+      height: 100%;
+      padding: 15px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      background-color: #eee;
+      color: #777;
+
+      .number {
+        font-size: 2em;
+
+      }
+    }
+
+    .actions {
+      position: absolute;
+      top: 5px;
+      right: 0;
+      cursor: pointer;
+    }
+  }
+
+  .search-campaign {
+    border: 1px solid color("grey", "base");
+    padding: 10px;
+  }
+}
+
+.campaign-show {
+  .field-label {
+    font-weight: 100;
+    color: #777;
+    font-size: 1.5em;
+  }
+
+  .campaign-body {
+    padding: 15px;
+    border: 1px solid #777;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .email {
+    position: relative;
+    border: 1px solid #777;
+
+    ul {
+      padding: 0 60px 0 70px;
+
+      .label {
+        color: #aaa;
+        font-weight: lighter;
+      }
+    }
+
+    .badge {
+      position: absolute;
+      background-color: color("blue-grey", "base");
+      color: white;
+      height: 100%;
+      width: 60px;
+      text-align: center;
+      font-size: 2em;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .action {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 60px;
+      padding: 15px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      background-color: #eee;
+      color: #777;
+      transition: 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: color("blue-grey", "base");
+        color: white;
+      }
+    }
+  }
+}
+
+.campaigns-new {
+  .container {
+    margin-top: 30px;
+  }
+}
+
+.campaign-edit {
+  .container {
+    margin-top: 30px;
+  }
+}

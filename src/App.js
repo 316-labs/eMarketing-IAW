@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 import CampaignsIndex from './components/campaigns/CampaignsIndex';
 import ShowCampaign from './components/campaigns/ShowCampaign';
 import NewCampaign from './components/campaigns/NewCampaign';
+import EditCampaign from './components/campaigns/EditCampaign';
 import ContactsIndex from './components/contacts/ContactsIndex';
 import NewContact from './components/contacts/NewContact';
 import EditContact from './components/contacts/EditContact';
@@ -128,7 +129,8 @@ export default class App extends React.Component {
   						<Route exact path='/' component={ Dashboard } />
   						<Route exact path='/campañas' component={ CampaignsIndex } />
   						<Route path='/campañas/nueva' component={ NewCampaign } />
-  						<Route path='/campañas/:id' component={ ShowCampaign } />
+  						<Route exact path='/campañas/:id' component={ ShowCampaign } />
+              <Route path='/campañas/:id/editar' component={ EditCampaign } />
               <Route exact path='/contactos' component={ ContactsIndex } />
   						<Route path='/contactos/nuevo' component={ NewContact } />
               <Route path='/contactos/:id/editar' component={ EditContact } />

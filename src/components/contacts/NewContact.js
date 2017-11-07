@@ -4,7 +4,6 @@ import ContactForm from './ContactForm';
 import { ProgressBar } from 'react-materialize';
 import $ from 'jquery';
 import { notify } from 'react-notify-toast';
-import PropTypes from 'prop-types';
 
 export default class NewContact extends React.Component {
 	constructor() {
@@ -65,7 +64,6 @@ export default class NewContact extends React.Component {
 
 
   handleTagChange(e) {
-    const name = e.target.name;
     const selectedTags = [...e.target.selectedOptions].map(option => option.value);
     this.setState({
       selectedTags

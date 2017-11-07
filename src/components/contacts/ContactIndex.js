@@ -3,14 +3,8 @@ import { Row, Col, Icon, Dropdown, NavItem } from 'react-materialize';
 import _ from 'lodash';
 import $ from 'jquery';
 import { notify } from 'react-notify-toast';
-import PropTypes from 'prop-types';
 
 export default class ContactIndex extends React.Component {
-  static contextTypes = {
-    userToken: PropTypes.string
-  }
-
-
   renderEtiqueta(etiqueta) {
     const id = this.props.contacto.id;
     return(
@@ -47,7 +41,7 @@ export default class ContactIndex extends React.Component {
 
 
   render() {
-    const { id, first_name, last_name, email, phone, tags } = this.props.contacto;
+    const { id, firstName, lastName, email, phone, tags } = this.props.contacto;
     const { index } = this.props;
     return (
       <div className='contact-index' id={ `contact-${id}` }>
@@ -56,7 +50,7 @@ export default class ContactIndex extends React.Component {
           <Col s={2}></Col>
           <Col s={6}>
             <ul className='contacto-info'>
-              <li className='full-name'><span className='campo'>[ nombre ]</span> { first_name } { last_name }</li>
+              <li className='full-name'><span className='campo'>[ nombre ]</span> { firstName } { lastName }</li>
               <li className='email'><span className='campo'>[ email ]</span> { email }</li>
               <li className='phone'><span className='campo'>[ teléfono ]</span> { phone }</li>
             </ul>

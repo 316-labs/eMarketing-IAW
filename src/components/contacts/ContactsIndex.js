@@ -8,11 +8,17 @@ import _ from 'lodash';
 import { notify } from 'react-notify-toast';
 
 class ContactsIndex extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      contactos: []
+      contactos: [],
+      nameOrEmail: props.nameOrEmail
     }
+  }
+
+
+  static defaultProps = {
+    nameOrEmail: ''
   }
 
 
@@ -46,7 +52,7 @@ class ContactsIndex extends React.Component {
 
 
   componentDidMount() {
-    this.fetchContacts();
+    this.buscarContacto();
   }
 
 
