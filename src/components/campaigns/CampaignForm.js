@@ -40,7 +40,7 @@ export default class CampaignForm extends React.Component {
                  value={ body }
                  modules={ this.modules }
                  formats={ this.formats }
-                 onChange={ (v) => this.props.handleBodyChange(v) } />
+                 onChange={ this.props.handleBodyChange } />
           </Col>
           <Col s={12} m={4}>
 

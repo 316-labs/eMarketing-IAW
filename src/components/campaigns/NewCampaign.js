@@ -9,7 +9,10 @@ class NewCampaign extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      campaign: {}
+      campaign: {
+        title: '',
+        body: ''
+      }
     }
   }
 
@@ -51,7 +54,7 @@ class NewCampaign extends React.Component {
       .done(response => {
         this.setState({ isLoading: false, error: false });
         notify.show('La campaña fue creada exitósamente', 'success');
-        this.props.history.push(`/campaña/${response.id}`);
+        this.props.history.push(`/campañas/${response.id}`);
       })
       .fail(response => {
         this.setState({ isLoading: false, error: true });

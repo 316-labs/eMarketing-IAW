@@ -10,7 +10,11 @@ export default class ShowCampaign extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      campaign: {},
+      campaign: {
+        title: '',
+        body: '',
+        contacts: []
+      },
       isLoading: true
     }
     this.id = props.match.params.id;

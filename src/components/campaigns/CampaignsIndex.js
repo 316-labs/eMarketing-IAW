@@ -59,20 +59,20 @@ class CampaignsIndex extends React.Component {
     })
       .done(response => {
         let campaigns = this.state.campaigns;
-        campaigns = _.remove(campaigns, c => c.id === campaign.id);
+        _.remove(campaigns, c => c.id === campaign.id);
         this.setState({
           isLoading: false,
           error: false,
           campaigns
         })
-        notify.show('Contacto eliminado exitosamente', 'success');
+        notify.show('Campaña eliminada exitosamente', 'success');
       })
       .fail(response => {
         this.setState({
           isLoading: false,
           error: true
         })
-        notify.show('Hubo un error al tratar de eliminar este contacto', 'error');
+        notify.show('Hubo un error al tratar de eliminar esta campaña', 'error');
       })
   }
 
@@ -128,7 +128,7 @@ class CampaignsIndex extends React.Component {
         key={ `campaign-${campaign.id}`}
         campaign={ campaign }
         index={ index }
-        deleteCampaign={ () => this.deleteCampaign() }
+        deleteCampaign={ (c) => this.deleteCampaign(c) }
         history={ this.props.history } />
     );
   }
