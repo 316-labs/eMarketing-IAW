@@ -58,7 +58,6 @@ export default class App extends React.Component {
       userToken: response.jwt,
       authorizeError: false
     });
-
   }
 
 
@@ -113,7 +112,6 @@ export default class App extends React.Component {
       authorized: false,
       userToken: ''
     });
-
   }
 
 

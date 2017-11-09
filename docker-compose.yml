@@ -1,0 +1,17 @@
+version: '3'
+services:
+  frontend:
+    container_name: 'emarketing'
+    build: .
+    environment:
+      env_file: .env
+      NODE_ENV: development
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/emarketing
+
+networks:
+  default:
+    external:
+      name: emarketing
