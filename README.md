@@ -39,3 +39,6 @@ Para correr los tests se deben ejecutar los siguientes comandos en orden:
   * En el proyecto de la aplicación client-side empezar a correr la app: `yarn start` (npm también es válido)
   * Luego abrir Cypress con el comando: `./node_modules/.bin/cypress open`
   * Luego seleccionar el test deseado y seleccionar correr todos
+
+
+This app is still in progress. For a list of TODO things up to date see [todo.md](TODO.md)
