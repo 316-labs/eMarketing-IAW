@@ -6942,6 +6942,12 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
       margin-top: 0;
       color: white;
       background-color: #4b626d; }
+    .sidebar .logo .user-email,
+    .sidebar .logo .user-full-name {
+      background-color: inherit;
+      margin: 0; }
+    .sidebar .logo .user-email {
+      font-size: 1em; }
     .sidebar .logo img {
       width: 45%;
       padding: 5px; }
@@ -6961,8 +6967,8 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
         background-color: #4b626d;
         padding: 20px 40px; }
   .sidebar .salir {
-    margin-top: 60px;
-    padding: 20px 0px; }
+    position: absolute;
+    bottom: 0; }
 
 .header {
   background-color: #212121;

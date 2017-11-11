@@ -2,8 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import { Col, Row, Input, Button, ProgressBar } from 'react-materialize';
 import { Link } from 'react-router-dom';
+import { authorize, saveUserToken, saveUser } from '../../UsersApi';
 
-class Login extends React.Component {
+export default class Login extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -31,14 +32,22 @@ class Login extends React.Component {
 
 
   authorize() {
+    this.setState({ isLoading: true });
     const { email, password } = this.state;
-    this.props.authorize(email, password);
+    authorize(email, password)
+      .done(response => {
+        saveUser(email, '', '');
+        saveUserToken(response.jwt);
+        this.props.history.push('/');
+      })
+      .fail(response => {
+        this.setState({ isLoading: false, authorizeError: true })
+      })
   }
 
 
 	render() {
-		const { valid, email, password } = this.state;
-    const { isLoading, authorizeError } = this.props;
+		const { isLoading, authorizeError, valid, email, password } = this.state;
 		return (
 			<div className='users-signin'>
 				<Row>
@@ -62,5 +71,3 @@ class Login extends React.Component {
 		);
 	}
 }
-
-export default Login;

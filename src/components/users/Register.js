@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Button, ProgressBar } from 'react-materialize';
 import { Link } from 'react-router-dom';
+import { authorize, register, saveUserToken, saveUser } from '../../UsersApi';
 
 class Register extends React.Component {
   constructor() {
@@ -13,13 +14,9 @@ class Register extends React.Component {
       nameError: '',
       lastNameError: '',
       emailError: '',
-      passwordError: ''
+      passwordError: '',
+      registerErrors: {}
     }
-  }
-
-
-  static defaultProps = {
-    registerErrors: {}
   }
 
 
@@ -46,14 +43,30 @@ class Register extends React.Component {
 
 
   register() {
+    this.setState({ isLoading: true });
     const { name, lastName, email, password } = this.state;
-    this.props.register(name, lastName, email, password);
+    const registered = register(name, lastName, email, password);
+    registered
+      .done(response => this.onRegisterSuccess(response))
+      .fail(response => {
+        this.setState({ isLoading: false, registerErrors: response.responseJSON})
+      })
+  }
+
+
+  onRegisterSuccess(response) {
+    const { email, password, name, lastName } = this.state;
+    authorize(email, password)
+      .done(token => {
+        saveUserToken(token.jwt);
+        saveUser(email, name, lastName);
+        this.props.history.push('/');
+      })
   }
 
 
 	render() {
-    const { name, lastName, email, password, valid } = this.state;
-    const { isLoading, registerErrors } = this.props;
+    const { isLoading, registerErrors, name, lastName, email, password, valid } = this.state;
 		return (
 			<div className='users-register'>
 				<div className="container">
@@ -69,7 +82,7 @@ class Register extends React.Component {
               :
                 [
                   <Button key='sign-up' className='register-button' onClick={ () => this.register() } disabled={ !valid }>Registrarme</Button>,
-                  <Link key='login' to='/login' className='btn btn-flat btn-block'>Iniciar sesión</Link>
+                  <Link key='login' to='/' className='btn btn-flat btn-block'>Iniciar sesión</Link>
                 ]
             }
 				</div>

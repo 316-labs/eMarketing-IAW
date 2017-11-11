@@ -17,111 +17,29 @@ import './stylesheets/App.css';
 import WelcomeImage from './welcome-image.jpeg';
 import LogoImage from './logo.png';
 import Notifications from 'react-notify-toast';
-import $ from 'jquery';
+import _ from 'lodash';
 
 export default class App extends React.Component {
-	constructor(props) {
-		super(props);
-    const userToken = sessionStorage.getItem('userToken');
-		this.state = {
-			authorized: userToken && userToken.length > 0,
-      authorizeError: false,
-      isLoading: false,
-			userToken
-		}
-	}
-
-
-	authorize(email, password) {
-		this.setState({ isLoading: true });
-    let config = {
-      url: `${process.env.REACT_APP_API_HOST}/user_token`,
-      method: 'post',
-      data: {
-        auth: {
-          email,
-          password
-        }
-      }
-    };
-    $.ajax(config)
-      .done(response => this.onAuthorizeSuccess(response))
-      .fail(response => this.onAuthorizeFail(response))
-	}
-
-
-  onAuthorizeSuccess(response) {
-    sessionStorage.setItem('userToken', response.jwt);
-    this.setState({
-      isLoading: false,
-      authorized: true,
-      userToken: response.jwt,
-      authorizeError: false
-    });
+  constructor() {
+    super();
+    console.log('constructor');
   }
 
 
-  onAuthorizeFail(response) {
-    console.log(response);
-    this.setState({
-      isLoading: false,
-      authorized: false,
-      userToken: '',
-      authorizeError: true
-    });
-  }
-
-
-  register(name, lastName, email, password) {
-    this.setState({ isLoading: true });
-    const config = {
-      url: `${process.env.REACT_APP_API_HOST}/v1/users`,
-      method: 'post',
-      data: {
-        user: {
-          name,
-          last_name: lastName,
-          email,
-          password
-        }
-      }
-    }
-    $.ajax(config)
-      .done(response => this.onRegisterSuccess(response, password))
-      .fail(response => this.onRegisterFail(response))
-  }
-
-
-  onRegisterSuccess(response, password) {
-    this.authorize(response.email, password);
-  }
-
-
-  onRegisterFail(response) {
-    this.setState({
-      isLoading: false,
-      authorized: false,
-      registerErrors: response.responseJSON
-    });
-  }
-
-
-  logout() {
-    sessionStorage.setItem('userToken', '');
-    this.setState({
-      authorized: false,
-      userToken: ''
+  componentDidMount() {
+    window.addEventListener('token', (e) => {
+      this.forceUpdate();
     });
   }
 
 
 	render() {
-		const { authorized, authorizeError, isLoading, registerErrors } = this.state;
+    const authorized = !_.isEmpty(sessionStorage.getItem('userToken'));
 		let authorizedRoutes;
 		if (authorized) {
 			authorizedRoutes = (
   			<div className="emarketing">
-  				<Sidebar logout={ () => this.logout() } />
+  				<Sidebar />
   				<main>
             <Switch>
   						<Route exact path='/' component={ Dashboard } />
@@ -147,18 +65,8 @@ export default class App extends React.Component {
 					<div className="half views">
 						<div className='logo center'><img src={ LogoImage } alt="emarketing" /></div>
 						<Switch>
-              <Route exact path='/registrarme' render={ () => (
-                <Register
-                  register={ (n, l, e, p) => this.register(n, l, e, p) }
-                  registerErrors={ registerErrors }
-                  isLoading={ isLoading } />
-              )} />
-							<Route path='/' render={ () => (
-                <Login
-                  authorize={ (e, p) => this.authorize(e, p) }
-                  authorizeError={ authorizeError }
-                  isLoading={ isLoading }/>
-              )} />
+              <Route exact path='/registrarme' component={ Register } />
+              <Route path='/' component={ Login } />
 						</Switch>
 					</div>
 				</div>

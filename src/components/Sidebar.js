@@ -1,14 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoImage from '../logo.png';
+import { logout, findByEmail, saveUser } from '../UsersApi';
 
-class Sidebar extends React.Component {
+export default class Sidebar extends React.Component {
+  constructor() {
+    super();
+    const email = sessionStorage.getItem('email');
+    const name = sessionStorage.getItem('name');
+    const lastName = sessionStorage.getItem('lastName');
+    this.state = {
+      email,
+      name,
+      lastName
+    };
+    if (!name) {
+      this.fetchUser();
+    }
+  }
+
+
+  fetchUser() {
+    const email = sessionStorage.getItem('email');
+    console.log('fetching user ' + email);
+    if (email) {
+      findByEmail(email)
+        .done(response => {
+          saveUser(response.email, response.name, response.lastName);
+          this.setState({
+            email: response.email,
+            name: response.name,
+            lastName: response.lastName
+          })
+        })
+    }
+  }
+
+
+  handleLogout() {
+    logout();
+  }
+
+
 	render() {
+    const email = sessionStorage.getItem('email') || '';
+    const name = sessionStorage.getItem('name') || '';
+    const lastName = sessionStorage.getItem('lastName') || '';
 		return(
 			<div className="sidebar">
         <div className="logo">
 				  <img src={ LogoImage } alt="logo"/>
           <p>eMarketing</p>
+          <p className="user-email">{ email }</p>
+          <p className="user-full-name">{ name } { lastName }</p>
         </div>
 				<ul>
 					<li><Link to='/'>Inicio</Link></li>
@@ -21,13 +65,10 @@ class Sidebar extends React.Component {
         </div>
 
         <div className="salir">
-          <input type="button" className="sidebar-btn" onClick={ () => this.props.logout() } value="Salir" />
+          <input type="button" className="sidebar-btn" onClick={ () => this.handleLogout() } value="Salir" />
         </div>
 
 			</div>
 		);
 	}
 }
-
-export default Sidebar;
-

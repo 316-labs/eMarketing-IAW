@@ -5,21 +5,28 @@ import $ from 'jquery';
 import { ProgressBar, Card, Row, Input, Button } from 'react-materialize';
 import { notify } from 'react-notify-toast';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
 class CampaignsIndex extends React.Component {
   constructor() {
     super();
     this.state = {
-      isLoading: false,
+      isLoading: true,
       error: false,
-      campaigns: []
+      campaigns: [],
+      titleSearch: '',
+      orderBy: ''
     }
+  }
+
+
+  componentDidMount() {
     this.fetchCampaigns();
   }
 
 
   fetchCampaigns() {
-    this.setState({ })
+    this.setState({ isLoading: true });
     const config = {
       url: `${process.env.REACT_APP_API_HOST}/v1/campaigns`,
       headers: { 'Authorization': 'Bearer ' + sessionStorage.userToken },
@@ -84,6 +91,10 @@ class CampaignsIndex extends React.Component {
 
   handleSearch(e) {
     e.preventDefault();
+    const value = e.target.value;
+    this.setState({
+      titleSearch: value
+    });
     console.log('handling search');
   }
 
@@ -112,11 +123,15 @@ class CampaignsIndex extends React.Component {
 
   renderCampaigns() {
     const { campaigns, error, isLoading } = this.state;
-    if (!error && campaigns) {
+    if (!error && !_.isEmpty(campaigns)) {
       return campaigns.map((campaign, index) => this.renderCampaign(campaign, index));
     } else if (!error && !isLoading && _.isEmpty(campaigns)) {
       return (
-        <Card title='No hay campañas 😅'>Crea algunas campañas para verlas acá</Card>
+        <Card
+          title='No hay campañas 😅'
+          actions={[<Link key='link-new-campaign' to='/campañas/nueva'>Crear campaña</Link>]}>
+          Crea algunas para verlas acá
+        </Card>
       );
     }
   }
@@ -135,6 +150,7 @@ class CampaignsIndex extends React.Component {
 
 
   renderActions() {
+    const { titleSearch } = this.state;
     return (
       <Row className="acciones">
         <Input s={12} m={6} type="select" name="ordenar" id="ordenar" defaultValue="" onChange={ (e) => this.handleOrdering(e) }>
@@ -147,13 +163,14 @@ class CampaignsIndex extends React.Component {
                  type="text"
                  name="title"
                  id="search-title"
+                 value={ titleSearch }
                  onChange={ (e) => this.handleSearch(e) }
                  className='search'
                  placeholder='Buscar por título' />
-                 <Input s={12} m={2}
-                        type="submit"
-                        value="Buscar"
-                        className="btn btn-primary" />
+          <Input s={12} m={2}
+                 type="submit"
+                 defaultValue="Buscar"
+                 className="btn btn-primary" />
          </form>
       </Row>
     );
