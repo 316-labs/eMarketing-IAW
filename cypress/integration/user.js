@@ -9,7 +9,7 @@ describe('Users', function() {
     cy.get('input[name="email"]').type('juan@test.com');
     cy.get('input[name="password"]').type('123456');
     cy.get('.login-button').click();
-    cy.get('.dashboard');
+    cy.get('.salir');
   })
 
   it('does not allow a user to login due to incorrect password or email', function () {
@@ -20,11 +20,12 @@ describe('Users', function() {
   })
 
   it('registers a user named Pepe correctly', function () {
-    cy.get('input[name="first_name"]').type('Pepe');
-    cy.get('input[name="last_name"]').type('José');
+    cy.get('.register-button').click();
+    cy.get('input[name="name"]').type('Pepe');
+    cy.get('input[name="lastName"]').type('José');
     cy.get('input[name="email"]').type('pepe@test.com');
     cy.get('input[name="password"]').type('1234');
     cy.get('.register-button').click();
-    cy.get('.dashboard');
+    cy.get('.salir');
   })
 })
