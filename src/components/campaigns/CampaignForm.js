@@ -26,12 +26,6 @@ export default class CampaignForm extends React.Component {
         ['clean']                                         // remove formatting button
       ]
     };
-    this.formats = [
-      'header',
-      'bold', 'italic', 'underline', 'strike', 'blockquote',
-      'list', 'bullet', 'indent',
-      'link', 'image'
-    ]
   }
 
 	render() {

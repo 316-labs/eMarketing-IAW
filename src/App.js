@@ -20,12 +20,6 @@ import Notifications from 'react-notify-toast';
 import _ from 'lodash';
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    console.log('constructor');
-  }
-
-
   componentDidMount() {
     window.addEventListener('token', (e) => {
       this.forceUpdate();

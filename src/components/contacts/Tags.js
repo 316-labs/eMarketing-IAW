@@ -55,7 +55,6 @@ class Tags extends React.Component {
       editTagId: tagId,
       error: false
     });
-    console.log('edit' + tagId);
   }
 
 

@@ -7155,6 +7155,6 @@ body {
   left: 200px; }
 
 .bottom-right-btn {
-  position: absolute;
+  position: fixed;
   bottom: 50px;
   right: 50px; }

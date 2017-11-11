@@ -5,7 +5,7 @@
   * [] Ability to select templates when editting
   * [] Reload contacts statistics after sending emails
   * [] Include a bar chart for statistics in show
-  * [] Edit button in show with proper positioning
+  * [x] Edit button in show with proper positioning
   * [] Ability to search campaigns by title or tag
   * [] Ability to order index list
 

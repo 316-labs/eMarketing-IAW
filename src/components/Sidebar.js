@@ -22,7 +22,6 @@ export default class Sidebar extends React.Component {
 
   fetchUser() {
     const email = sessionStorage.getItem('email');
-    console.log('fetching user ' + email);
     if (email) {
       findByEmail(email)
         .done(response => {
