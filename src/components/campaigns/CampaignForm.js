@@ -8,11 +8,22 @@ export default class CampaignForm extends React.Component {
     super();
     this.modules = {
       toolbar: [
-        [{ 'header': [1, 2, false] }],
-        ['bold', 'italic', 'underline','strike', 'blockquote'],
-        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        [{ 'align': [] }],
         ['link', 'image'],
-        ['clean']
+        ['blockquote', 'code-block'],
+
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+
+        ['clean']                                         // remove formatting button
       ]
     };
     this.formats = [
@@ -26,23 +37,25 @@ export default class CampaignForm extends React.Component {
 	render() {
     const { title, body } = this.props.campaign;
 		return (
-			<div>
+			<div className='campaign-form'>
         <Row>
-          <Input s={12} m={8}
+          <Input s={12} m={10}
                  name='title'
                  labelClassName={ `${title ? 'active' : '' }` }
                  value={ title }
                  label='Título'
                  onChange={ (e) => this.props.handleChange(e) } />
-          <Col s={12} m={8}>
+          <Col s={12} m={10}>
             <label htmlFor="">Cuerpo</label>
             <ReactQuill
-                 value={ body }
-                 modules={ this.modules }
-                 formats={ this.formats }
-                 onChange={ this.props.handleBodyChange } />
+              value={ body }
+              modules={ this.modules }
+              theme='snow'
+              onChange={ this.props.handleBodyChange }>
+              <div className="editing-area"/>
+            </ReactQuill>
           </Col>
-          <Col s={12} m={4}>
+          <Col s={12} m={2}>
 
           </Col>
         </Row>

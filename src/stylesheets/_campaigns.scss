@@ -152,3 +152,9 @@
     margin-top: 30px;
   }
 }
+
+.campaign-form {
+  .editing-area {
+    min-height: calc(100vh - 40vh);
+  }
+}
