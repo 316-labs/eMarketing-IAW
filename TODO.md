@@ -1,24 +1,29 @@
 # TODO LIST
 
 1. Campaigns scope:
-  1. [x] Ability to add contacts
-  2. [] Ability to select templates when editting
-  3. [] Reload contacts statistics after sending emails
-  4. [] Include a bar chart for statistics in show
-  5. [x] Edit button in show with proper positioning
-  6. [] Ability to search campaigns by title or tag
-  7. [] Ability to order index list
+
+  - [x] Ability to add contacts
+  - [ ] Ability to select templates when editting
+  - [ ] Reload contacts statistics after sending emails
+  - [ ] Include a bar chart for statistics in show
+  - [x] Edit button in show with proper positioning
+  - [ ] Ability to search campaigns by title or tag
+  - [ ] Ability to order index list
 
 2. Users scope
-  1. [] Encapsulate forms in a html form to have key bindings
+
+  - [ ] Encapsulate forms in a html form to have key bindings
 
 3. Tags scope
-  1. [x] Ability to create/delete tags (update is working)
-  2. [x] Add go back button in header
-  3. [] Localize dates
+
+  - [x] Ability to create/delete tags (update is working)
+  - [x] Add go back button in header
+  - [ ] Localize dates
 
 4. Contacts scope
-  1. [] Ability to order index list
+
+  - [ ] Ability to order index list
 
 5. Main scope
-  1. [] Add dashboard view
+
+  - [ ] Add dashboard view
