@@ -157,4 +157,53 @@
   .editing-area {
     min-height: calc(100vh - 40vh);
   }
+
+  .contacts {
+    margin-top: 15px;
+
+    .contact {
+      position: relative;
+      border-radius: 5px;
+      padding: 10px;
+      color: #eee;
+      min-height: 185px;
+      border: 1px solid white;
+      background-color: color('blue-grey', 'base');
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        margin-top: 0;
+      }
+
+      &-full-name {
+        font-size: 1.2em;
+        margin-bottom: 0;
+      }
+
+      &-email {
+        margin-bottom: 5px;
+      }
+
+      &-tags {
+        text-align: center;
+      }
+
+      .destroy-contact {
+        cursor: pointer;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        color: white;
+        transition: 0.3s ease;
+
+        &:hover {
+          color: color('red', 'darken-3');
+        }
+      }
+    }
+  }
 }

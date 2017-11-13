@@ -7141,6 +7141,39 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 .campaign-form .editing-area {
   min-height: calc(100vh - 40vh); }
 
+.campaign-form .contacts {
+  margin-top: 15px; }
+  .campaign-form .contacts .contact {
+    position: relative;
+    border-radius: 5px;
+    padding: 10px;
+    color: #eee;
+    min-height: 185px;
+    border: 1px solid white;
+    background-color: #607d8b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    .campaign-form .contacts .contact p {
+      margin-top: 0; }
+    .campaign-form .contacts .contact-full-name {
+      font-size: 1.2em;
+      margin-bottom: 0; }
+    .campaign-form .contacts .contact-email {
+      margin-bottom: 5px; }
+    .campaign-form .contacts .contact-tags {
+      text-align: center; }
+    .campaign-form .contacts .contact .destroy-contact {
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: white;
+      transition: 0.3s ease; }
+      .campaign-form .contacts .contact .destroy-contact:hover {
+        color: #C62828; }
+
 html {
   font-family: 'Fira Sans', sans-serif; }
 
@@ -7158,3 +7191,6 @@ body {
   position: fixed;
   bottom: 50px;
   right: 50px; }
+
+.no-shadow {
+  box-shadow: 0; }

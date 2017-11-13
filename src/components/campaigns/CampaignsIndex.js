@@ -153,7 +153,7 @@ class CampaignsIndex extends React.Component {
     const { titleSearch } = this.state;
     return (
       <Row className="acciones">
-        <Input s={12} m={6} type="select" name="ordenar" id="ordenar" defaultValue="" onChange={ (e) => this.handleOrdering(e) }>
+        <Input s={12} m={6} type="select" name="ordenar" id="ordenar" value="" onChange={ (e) => this.handleOrdering(e) }>
           <option value="">Ordenar por ...</option>
           <option value="title">Titulo</option>
           <option value="created_at">Fecha de creación</option>
@@ -169,7 +169,7 @@ class CampaignsIndex extends React.Component {
                  placeholder='Buscar por título' />
           <Input s={12} m={2}
                  type="submit"
-                 defaultValue="Buscar"
+                 value="Buscar"
                  className="btn btn-primary" />
          </form>
       </Row>

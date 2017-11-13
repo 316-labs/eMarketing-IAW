@@ -52,7 +52,7 @@ export default class Login extends React.Component {
 			<div className='users-signin'>
 				<Row>
 					<Col s={ 8 } offset='s2'>
-						<Input s={12} label='Email' name='email' value={ email } error={ authorizeError ? ' ' : '' } onChange={ (e) => this.handleInput(e) }/>
+						<Input s={12} label='Email' name='email' type='email' value={ email } error={ authorizeError ? ' ' : '' } onChange={ (e) => this.handleInput(e) }/>
 						<Input s={12} type='password' name='password' value={ password } error={ authorizeError ? ' ' : '' } label='Contraseña' onChange={ (e) => this.handleInput(e) }/>
             {
               isLoading ?

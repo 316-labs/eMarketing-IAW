@@ -106,7 +106,7 @@ class Tags extends React.Component {
         <Input
           autoFocus='true'
           name='name'
-          defaultValue={ tag.name }
+          value={ tag.name }
           onBlur={ (e) => this.handleTagName(e) }
           error={ error }/>
       );

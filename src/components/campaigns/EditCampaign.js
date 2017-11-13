@@ -12,6 +12,10 @@ export default class EditCampaign extends React.Component {
       campaign: {}
     }
     this.id = props.match.params.id;
+  }
+
+
+  componentDidMount() {
     this.fetchCampaign();
   }
 
@@ -26,26 +30,6 @@ export default class EditCampaign extends React.Component {
     $.ajax(config)
       .done(response => this.setState({ isLoading: false, error: false, campaign: response }))
       .fail(response => this.setState({ isLoading: false, error: true }))
-  }
-
-
-  handleChange(e) {
-    const name = e.target.name;
-    const value = e.target.value;
-    let campaign = this.state.campaign;
-    campaign[name] = value;
-    this.setState({
-      campaign
-    });
-  }
-
-
-  handleBodyChange(v) {
-    let campaign = this.state.campaign;
-    campaign.body = v;
-    this.setState({
-      campaign
-    });
   }
 
 

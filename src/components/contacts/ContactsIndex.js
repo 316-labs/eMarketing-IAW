@@ -128,7 +128,7 @@ class ContactsIndex extends React.Component {
 					back="/" />
 				<div className="container">
           <Row className="acciones">
-            <Input s={12} m={6} type="select" name="ordenar" id="ordenar" defaultValue="">
+            <Input s={12} m={6} type="select" name="ordenar" id="ordenar" value="">
               <option value="">Ordenar por ...</option>
               <option value="nombre">Nombre</option>
               <option value="email">Email</option>
