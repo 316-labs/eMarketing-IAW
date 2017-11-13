@@ -7032,6 +7032,9 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   flex-direction: row;
   justify-content: space-around; }
 
+th {
+  font-weight: bold; }
+
 .campaigns .acciones .tags {
   position: relative;
   top: 15px; }

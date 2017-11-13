@@ -1,17 +1,22 @@
 import React from 'react';
 import Header from '../Header';
-import $ from 'jquery';
 import { Table, Button, ProgressBar, Input } from 'react-materialize';
 import { notify } from 'react-notify-toast';
-import PropTypes from 'prop-types';
+import { fetchTags, editTag, destroyTag, createTag } from '../../api/TagsApi';
+import _ from 'lodash';
+import moment from 'moment';
 
 class Tags extends React.Component {
   constructor() {
     super();
     this.state = {
       tags: [],
-      editTagId: ''
+      editTagId: '',
+      newTag: false,
+      newTagName: '',
+      newTagErrors: []
     }
+    moment.locale('es');
   }
 
 
@@ -20,33 +25,11 @@ class Tags extends React.Component {
   }
 
 
-  static contextTypes = {
-    userToken: PropTypes.string
-  }
-
-
   fetchTags() {
     this.setState({ isLoading: true });
-    $.ajax({
-      url: `${process.env.REACT_APP_API_HOST}/v1/tags`,
-      headers: {
-        'Authorization': 'Bearer ' + sessionStorage.userToken
-      },
-      method: 'get'
-    })
-      .done(response => {
-        this.setState({
-          isLoading: false,
-          tags: response,
-          error: false
-        });
-      })
-      .fail(response => {
-        this.setState({
-          isLoading: false,
-          error: true
-        })
-      })
+    fetchTags()
+      .done(response => this.setState({ isLoading: false, tags: response, error: false }))
+      .fail(response => this.setState({ isLoading: false, error: true }))
   }
 
 
@@ -58,8 +41,19 @@ class Tags extends React.Component {
   }
 
 
-  handleDeleteButton() {
-    console.log('delete');
+  handleDestroyButton(tagId) {
+    this.setState({ isLoading: true });
+    let { tags } = this.state;
+    destroyTag(tagId)
+      .done(response => {
+        _.remove(tags, tag => tag.id === tagId);
+        this.setState({ isLoading: false, tags });
+        notify.show('La etiqueta fue eliminada correctamente', 'success');
+      })
+      .fail(response => {
+        this.setState({ isLoading: false });
+        notify.show('No se pudo eliminar la etiqueta', 'error');
+      })
   }
 
 
@@ -69,33 +63,67 @@ class Tags extends React.Component {
     const tags = this.state.tags;
     var editedTag = tags.find(tag => tag.id === editTagId);
     if (editedTag.name !== name) {
-      $.ajax({
-        url: `${process.env.REACT_APP_API_HOST}/v1/tags/${ editTagId }`,
-        headers: {
-          'Authorization': 'Bearer ' + sessionStorage.userToken
-        },
-        method: 'put',
-        data: {
-          tag: {
-            name
-          }
-        }
-      })
+      editTag(editTagId, name)
         .done(response => {
           editedTag.name = name;
-          this.setState({
-            successId: editTagId,
-            tags,
-            error: false
-          });
+          this.setState({ successId: editTagId, tags, error: false });
           notify.show('Etiqueta actualizada correctamente', 'success');
         })
         .fail(response => {
-          this.setState({
-            error: true
-          })
+          this.setState({ error: true })
+          notify.show('No se pudo actualizar la etiqueta', 'error');
         })
     }
+  }
+
+
+  saveNewTag() {
+    this.setState({ isLoading: true });
+    const { newTagName } = this.state;
+    let { tags } = this.state;
+    createTag(newTagName)
+      .done(response => {
+        tags.unshift(response);
+        this.setState({ isLoading: false, newTag: false, newTagName: '', newTagErrors: [], tags });
+        notify.show('Etiqueta creada correctamente', 'success');
+      })
+      .fail(response => {
+        this.setState({ isLoading: false, newTagErrors: response.responseJSON });
+        notify.show('No se pudo crear la etiqueta', 'error');
+      })
+  }
+
+
+  cancelNewTag() {
+    this.setState({
+      newTag: false,
+      newTagName: '',
+      newTagErrors: []
+    });
+  }
+
+
+  renderNewTag() {
+    const { newTagErrors, newTagName } = this.state;
+    return(
+      <tr>
+        <td></td>
+        <td>
+          <Input
+            autoFocus='true'
+            name='name'
+            value={ newTagName }
+            onChange={ (e) => this.setState({ newTagName: e.target.value }) }
+            error={ newTagErrors.join(', ') }/>
+        </td>
+      <td></td>
+      <td></td>
+      <td className='actions'>
+        <Button className="btn" waves='light' onClick={ () => this.saveNewTag() }>Guardar</Button>
+        <Button className="btn grey" waves='light' onClick={ () => this.cancelNewTag() }>Cancelar</Button>
+      </td>
+      </tr>
+    );
   }
 
 
@@ -106,7 +134,7 @@ class Tags extends React.Component {
         <Input
           autoFocus='true'
           name='name'
-          value={ tag.name }
+          defaultValue={ tag.name }
           onBlur={ (e) => this.handleTagName(e) }
           error={ error }/>
       );
@@ -126,10 +154,10 @@ class Tags extends React.Component {
           { this.renderNameOrField(tag) }
         </td>
         <td>{ tag.contacts }</td>
-        <td>{ tag.created_at }</td>
+        <td>{ moment(tag.createdAt).locale('es').format('LLL') }</td>
         <td className='actions'>
-          <Button className='btn btn-outline' waves='light' onClick={ () => this.handleEditButton(tag.id) }>Editar</Button>
-          <Button className='btn btn-outline' waves='red' onClick={ () => this.handleDeleteButton(tag.id) }>Eliminar</Button>
+          <Button className='btn blue-grey' waves='light' onClick={ () => this.handleEditButton(tag.id) }>Editar</Button>
+          <Button className='btn grey' waves='red' onClick={ () => this.handleDestroyButton(tag.id) }>Eliminar</Button>
         </td>
       </tr>
     );
@@ -137,10 +165,15 @@ class Tags extends React.Component {
 
 
 	render() {
-    const { tags, isLoading } = this.state;
+    const { tags, isLoading, newTag } = this.state;
 		return (
 			<div className="tags">
-				<Header title='Etiquetas' />
+				<Header
+          title='Etiquetas'
+          back='/contactos'
+          action={ () => this.setState({ newTag: true }) }
+          actionName='Crear etiqueta'
+          actionClassName='new-button'/>
 				<div className="container">
 					<Table hoverable bordered striped>
             <thead>
@@ -153,6 +186,10 @@ class Tags extends React.Component {
               </tr>
             </thead>
             <tbody>
+              {
+                newTag &&
+                  this.renderNewTag()
+              }
               {
                 isLoading ?
                   <tr>
