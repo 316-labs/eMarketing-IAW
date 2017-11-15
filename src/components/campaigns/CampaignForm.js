@@ -125,7 +125,7 @@ export default class CampaignForm extends React.Component {
 
   renderContacts() {
     const { campaign } = this.state;
-    if (!_.isEmpty(campaign)) {
+    if (!_.isEmpty(campaign) && campaign.id) {
       return(
         <div className="contacts">
           { this.renderSelectContact() }
@@ -134,6 +134,12 @@ export default class CampaignForm extends React.Component {
           </Row>
         </div>
       );
+    } else if (!_.isEmpty(campaign) && !campaign.id){
+      return(
+        <div className="contacts">
+          <Chip>Debes guardar la campaña para luego poder agregar contactos</Chip>
+        </div>
+      )
     }
   }
 

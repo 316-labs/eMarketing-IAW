@@ -11,7 +11,8 @@ class NewCampaign extends React.Component {
     this.state = {
       campaign: {
         title: '',
-        body: ''
+        body: '',
+        contacts: []
       }
     }
   }

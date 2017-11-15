@@ -1,5 +1,8 @@
-# eMarketing
+# [eMarketing](https://emarketing-iaw.herokuapp.com)
 por Juan Manuel Ramallo
+
+Al probar la aplicación subida en heroku puede que sea necesario hacer un `full reload` la primer vez que se visite,
+para así evitar usar las cachés del navegador las cuales podrían estar con código viejo de la aplicación.
 
 ### Dependencias
 * React
@@ -41,4 +44,5 @@ Para correr los tests se deben ejecutar los siguientes comandos en orden:
   * Luego seleccionar el test deseado y seleccionar correr todos
 
 
+### In progress
 This app is still in progress. For a list of TODO things up to date see [todo.md](TODO.md)
