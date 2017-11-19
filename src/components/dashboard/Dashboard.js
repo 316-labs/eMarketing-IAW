@@ -64,17 +64,26 @@ export default class Dashboard extends React.Component {
       return null
     } else {
       return(
-        <div className="contacts-info">
-          <div className="section">
-            <h5>Contactos agrupados por etiqueta</h5>
-            <DoughnutContactsCount data={ contactsCount } />
-          </div>
-
-          <div className="section">
-            <h5>Engagement de contactos por etiqueta</h5>
-            <LineEmailsOpenedByDayAndTag data={ emailsOpenedByDayAndTag } />
-          </div>
-
+        <div>
+          {
+            contactsCount.length > 0 ?
+              <div className="contacts-info">
+                <div className="section">
+                  <h5>Contactos agrupados por etiqueta</h5>
+                  <DoughnutContactsCount data={ contactsCount } />
+                </div>
+                <div className="section">
+                  <h5>Engagement de contactos por etiqueta</h5>
+                  <LineEmailsOpenedByDayAndTag data={ emailsOpenedByDayAndTag } />
+                </div>
+              </div>
+            :
+              <Card
+                title='No hay contactos 😅'
+                actions={[<Link key='link-new-contact' to='/contactos/nuevo'>Crear contacto</Link>]}>
+                Crea algunos contactos para verlos acá agrupados por etiqueta
+              </Card>
+          }
         </div>
       );
     }
