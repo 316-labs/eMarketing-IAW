@@ -1,0 +1,79 @@
+$size: 150px;
+$half: 75px;
+.today-total-item {
+  position: absolute;
+  top: calc(50% - #{$half});
+  left: calc(50% - #{$half});
+  height: $size;
+  width: $size;
+  border-radius: $half;
+  border: 1px solid #777;
+  transition: 0.3s ease;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  color: color('grey', 'darken-2');
+  text-align: center;
+
+  .number {
+    font-size: 3em;
+  }
+
+  .text {
+    position: relative;
+    top: -10px;
+    font-size: 0.8em;
+  }
+}
+
+.dashboard {
+  .dashboard-campaign {
+    border: 1px solid #777;
+    margin: 10px;
+    padding: 10px;
+
+    &-title {
+      font-size: 1.2;
+    }
+
+    canvas {
+      height: 30vh !important;
+      width: 90% !important;
+    }
+  }
+
+  .contacts-info {
+    border: 1px solid #777;
+    margin: 10px;
+    padding: 10px 20px 10px 40px;
+  }
+
+  .today-totals {
+    position: absolute;
+    top: calc(50% - #{$half});
+    left: calc(50% - #{$half});
+    height: $size;
+    width: $size;
+    border-radius: $half;
+    transition: 0.3s ease;
+    border: 2px solid #777;
+
+    &-opened {
+      @extend .today-total-item;
+    }
+
+    &-sent {
+      @extend .today-total-item;
+      opacity: 0;
+
+      &:hover {
+        opacity: 1;
+        background-color: color('grey', 'darken-2');
+        color: white;
+      }
+    }
+  }
+}

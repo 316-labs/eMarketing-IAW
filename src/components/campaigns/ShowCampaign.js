@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import $ from 'jquery';
-import { Row, Col, ProgressBar, Table, Button } from 'react-materialize';
+import { Row, Col, ProgressBar, Table, Button, Icon } from 'react-materialize';
 import ContactEmail from './ContactEmail';
 import { notify } from 'react-notify-toast';
 import _ from 'lodash';
@@ -121,7 +121,7 @@ export default class ShowCampaign extends React.Component {
         <div className="campaign">
           <Row>
             <Col s={12} m={8}>
-              <p className='field-label'>Previsualización</p>
+              <p className='field-label'>Previsualización { campaign.spotlighted && <Icon className='orange-text'>star</Icon> }</p>
               <div className="campaign-body" dangerouslySetInnerHTML={ this.createMarkup() }></div>
               { this.renderStatistics() }
             </Col>

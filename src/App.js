@@ -4,7 +4,7 @@ import Login from './components/users/Login';
 import Register from './components/users/Register';
 import EditUser from './components/users/EditUser';
 import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import CampaignsIndex from './components/campaigns/CampaignsIndex';
 import ShowCampaign from './components/campaigns/ShowCampaign';
 import NewCampaign from './components/campaigns/NewCampaign';

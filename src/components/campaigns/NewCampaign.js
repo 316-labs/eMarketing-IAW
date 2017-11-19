@@ -47,7 +47,8 @@ class NewCampaign extends React.Component {
       data: {
         campaign: {
           title: campaign.title,
-          body: campaign.body
+          body: campaign.body,
+          spotlighted: campaign.spotlighted
         }
       }
     }

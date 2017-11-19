@@ -56,13 +56,12 @@ export default class EditContact extends React.Component {
 
     // Manejo asincrónico de creación de contacto
     let contact = this.state.contacto;
+    contact.tag_ids = this.state.contacto.tagIds;
     delete contact.tags;
-    contact.tag_ids = this.state.selectedTags;
+    delete contact.tagIds;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ contact.id }`,
-      headers: {
-        'Authorization': 'Bearer ' + sessionStorage.userToken
-      },
+      headers: { 'Authorization': 'Bearer ' + sessionStorage.userToken },
       method: 'PUT',
       data: {
         contact
@@ -99,8 +98,10 @@ export default class EditContact extends React.Component {
 
   handleTagChange(e) {
     const selectedTags = [...e.target.selectedOptions].map(option => option.value);
+    let contact = this.state.contacto;
+    contact.tagIds = selectedTags;
     this.setState({
-      selectedTags
+      contact
     })
   }
 

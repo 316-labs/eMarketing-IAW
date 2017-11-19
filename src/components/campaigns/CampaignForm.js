@@ -46,7 +46,10 @@ export default class CampaignForm extends React.Component {
 
   handleChange(e) {
     const name = e.target.name;
-    const value = e.target.value;
+    let value = e.target.value;
+    if (e.target.type === 'checkbox') {
+      value = e.target.checked;
+    }
     let campaign = this.state.campaign;
     campaign[name] = value;
     this.setState({
@@ -145,7 +148,7 @@ export default class CampaignForm extends React.Component {
 
 
 	render() {
-    const { title, body } = this.state.campaign;
+    const { title, body, spotlighted } = this.state.campaign;
 		return (
 			<div className='campaign-form'>
         <Row>
@@ -165,6 +168,15 @@ export default class CampaignForm extends React.Component {
                 onChange={ (v) => this.handleBodyChange(v) }>
                 <div className="editing-area"/>
               </ReactQuill>
+            </div>
+
+            <div className="section">
+              <Input name='spotlighted'
+                     type='checkbox'
+                     value={ spotlighted }
+                     label='Destacada'
+                     className='filled-in'
+                     onChange={ (e) => this.handleChange(e) }/>
             </div>
 
             <div className="section">

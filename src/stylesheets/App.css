@@ -7016,6 +7016,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     flex-direction: column;
     justify-content: center; }
   .contacts .contact-index .actions {
+    cursor: pointer;
     position: absolute;
     top: 5px;
     right: 0; }
@@ -7176,6 +7177,59 @@ th {
       transition: 0.3s ease; }
       .campaign-form .contacts .contact .destroy-contact:hover {
         color: #C62828; }
+
+.today-total-item, .dashboard .today-totals-opened, .dashboard .today-totals-sent {
+  position: absolute;
+  top: calc(50% - 75px);
+  left: calc(50% - 75px);
+  height: 150px;
+  width: 150px;
+  border-radius: 75px;
+  border: 1px solid #777;
+  transition: 0.3s ease;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #616161;
+  text-align: center; }
+  .today-total-item .number, .dashboard .today-totals-opened .number, .dashboard .today-totals-sent .number {
+    font-size: 3em; }
+  .today-total-item .text, .dashboard .today-totals-opened .text, .dashboard .today-totals-sent .text {
+    position: relative;
+    top: -10px;
+    font-size: 0.8em; }
+
+.dashboard .dashboard-campaign {
+  border: 1px solid #777;
+  margin: 10px;
+  padding: 10px; }
+  .dashboard .dashboard-campaign-title {
+    font-size: 1.2; }
+  .dashboard .dashboard-campaign canvas {
+    height: 30vh !important;
+    width: 90% !important; }
+
+.dashboard .contacts-info {
+  border: 1px solid #777;
+  margin: 10px;
+  padding: 10px 20px 10px 40px; }
+
+.dashboard .today-totals {
+  position: absolute;
+  top: calc(50% - 75px);
+  left: calc(50% - 75px);
+  height: 150px;
+  width: 150px;
+  border-radius: 75px;
+  transition: 0.3s ease;
+  border: 2px solid #777; }
+  .dashboard .today-totals-sent {
+    opacity: 0; }
+    .dashboard .today-totals-sent:hover {
+      opacity: 1;
+      background-color: #616161;
+      color: white; }
 
 html {
   font-family: 'Fira Sans', sans-serif; }

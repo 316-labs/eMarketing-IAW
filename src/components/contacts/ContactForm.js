@@ -54,22 +54,22 @@ export default class ContactForm extends React.Component {
 
 
   render() {
-    const { first_name, last_name, email, phone, country, city, emailConfirmation } = this.props.contacto;
-    const { selectedTags } = this.props;
+    const { firstName, lastName, email, phone, country, city } = this.props.contacto;
+    const selectedTags = this.props.contacto.tagIds;
   	return(
 			<div className='form'>
 				<Row>
           <Col s={12} m={12}>
             <Input s={12}
                    name='first_name'
-                   labelClassName={ `${first_name ? 'active' : '' }` }
-                   value={ first_name }
+                   labelClassName={ `${firstName ? 'active' : '' }` }
+                   value={ firstName }
                    label='Nombre'
                    onChange={ (e) => this.props.handleChange(e) } />
             <Input s={12}
                    name='last_name'
-                   labelClassName={ `${last_name ? 'active' : '' }` }
-                   value={ last_name }
+                   labelClassName={ `${lastName ? 'active' : '' }` }
+                   value={ lastName }
                    label='Apellido'
                    onChange={ (e) => this.props.handleChange(e) }/>
             <Input s={12}
@@ -77,12 +77,6 @@ export default class ContactForm extends React.Component {
                    labelClassName={ `${email ? 'active' : '' }` }
                    value={ email }
                    label='Email'
-                   onChange={ (e) => this.props.handleChange(e) }/>
-            <Input s={12}
-                   name='email_confirmation'
-                   labelClassName={ `${emailConfirmation ? 'active' : '' }` }
-                   value={ emailConfirmation }
-                   label='Email Confirmation'
                    onChange={ (e) => this.props.handleChange(e) }/>
             <Input s={12}
                    name='phone'
@@ -106,9 +100,9 @@ export default class ContactForm extends React.Component {
                    name='tags'
                    type='select'
                    label='Etiquetas'
-                   multiple
                    value={ selectedTags }
-                   onChange={ (e) => this.props.handleTagChange(e) }>
+                   onChange={ (e) => this.props.handleTagChange(e) }
+                   multiple>
               { this.renderTagOptions() }
             </Input>
           </Col>

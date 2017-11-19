@@ -26,4 +26,4 @@
 
 5. Main scope
 
-  - [ ] Add dashboard view
+  - [x] Add dashboard view
