@@ -59,6 +59,10 @@ export default class EditContact extends React.Component {
     contact.tag_ids = this.state.contacto.tagIds;
     delete contact.tags;
     delete contact.tagIds;
+    contact.first_name = contact.firstName;
+    contact.last_name = contact.lastName;
+    delete contact.firstName;
+    delete contact.lastName;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts/${ contact.id }`,
       headers: { 'Authorization': 'Bearer ' + sessionStorage.userToken },

@@ -24,6 +24,10 @@ export default class NewContact extends React.Component {
     const contact = this.state.contacto;
     delete contact.tags;
     contact.tag_ids = this.state.selectedTags;
+    contact.first_name = contact.firstName;
+    contact.last_name = contact.lastName;
+    delete contact.firstName;
+    delete contact.lastName;
     $.ajax({
       url: `${process.env.REACT_APP_API_HOST}/v1/contacts`,
       headers: {

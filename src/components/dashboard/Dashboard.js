@@ -25,7 +25,7 @@ export default class Dashboard extends React.Component {
 
   fetchCampaigns() {
     fetchSpotlightedCampaigns()
-      .done(response => this.setState({ isLoading: false, campaigns: response.campaigns, contactsCount: response.contactsCount, emailsOpenedToday: response.emailsOpenedToday, emailsSentToday: response.emailsSentToday, emailsOpenedByDayAndTag: response.emailsOpenedByDayAndTag, error: false }))
+      .done(response => this.setState({ campaigns: response.campaigns, contactsCount: response.contactsCount, emailsOpenedToday: response.emailsOpenedToday, emailsSentToday: response.emailsSentToday, emailsOpenedByDayAndTag: response.emailsOpenedByDayAndTag, error: false, isLoading: false }))
       .fail(response => this.setState({ isLoading: false, error: true }))
   }
 
@@ -66,7 +66,7 @@ export default class Dashboard extends React.Component {
       return(
         <div>
           {
-            contactsCount.length > 0 ?
+            !_.isEmpty(contactsCount) ?
               <div className="contacts-info">
                 <div className="section">
                   <h5>Contactos agrupados por etiqueta</h5>

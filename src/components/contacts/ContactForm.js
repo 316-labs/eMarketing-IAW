@@ -61,13 +61,13 @@ export default class ContactForm extends React.Component {
 				<Row>
           <Col s={12} m={12}>
             <Input s={12}
-                   name='first_name'
+                   name='firstName'
                    labelClassName={ `${firstName ? 'active' : '' }` }
                    value={ firstName }
                    label='Nombre'
                    onChange={ (e) => this.props.handleChange(e) } />
             <Input s={12}
-                   name='last_name'
+                   name='lastName'
                    labelClassName={ `${lastName ? 'active' : '' }` }
                    value={ lastName }
                    label='Apellido'

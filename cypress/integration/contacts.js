@@ -9,7 +9,6 @@ describe('Contacts', function () {
   }
 
   before(function () {
-    console.log('executing before');
     cy.window().then(win => win.sessionStorage.clear());
     cy.request('delete', `${Cypress.env('api_host')}/cleanup`);
     cy.visit(`${Cypress.env('host')}`);
@@ -28,10 +27,9 @@ describe('Contacts', function () {
 
   it('Creates a new contact', function() {
     cy.get('#new-contact').click();
-    cy.get('input[name="first_name"]').type(newContact.firstName);
-    cy.get('input[name="last_name"]').type(newContact.lastName);
+    cy.get('input[name="firstName"]').type(newContact.firstName);
+    cy.get('input[name="lastName"]').type(newContact.lastName);
     cy.get('input[name="email"]').type(newContact.email);
-    cy.get('input[name="email_confirmation"]').type(newContact.email);
     cy.get('input[name="phone"]').type(newContact.phone);
     cy.get('input[name="country"]').type(newContact.country);
     cy.get('input[name="city"]').type(newContact.city);
@@ -55,8 +53,8 @@ describe('Contacts', function () {
     });
 
     cy.wait(500); // Because it needs to wait some ajax calls
-    cy.get('input[name="first_name"]').type(`{selectall}{backspace}${newContact.firstName}`);
-    cy.get('input[name="last_name"]').type(`{selectall}{backspace}${newContact.lastName}`);
+    cy.get('input[name="firstName"]').type(`{selectall}{backspace}${newContact.firstName}`);
+    cy.get('input[name="lastName"]').type(`{selectall}{backspace}${newContact.lastName}`);
     cy.get('.save').click();
 
     cy.get('.contact-index:first').within(function() {

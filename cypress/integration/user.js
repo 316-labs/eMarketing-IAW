@@ -28,4 +28,14 @@ describe('Users', function() {
     cy.get('.register-button').click();
     cy.get('.salir');
   })
+
+  it('does not allow a user to register due to email already registered', function() {
+    cy.get('.register-button').click();
+    cy.get('input[name="name"]').type('Juan');
+    cy.get('input[name="lastName"]').type('Perez');
+    cy.get('input[name="email"]').type('juan@test.com');
+    cy.get('input[name="password"]').type('12345678');
+    cy.get('.register-button').click();
+    cy.get('input[name="email"]').should('have.class', 'invalid');
+  })
 })
