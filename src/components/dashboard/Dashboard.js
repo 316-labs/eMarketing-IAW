@@ -49,9 +49,9 @@ export default class Dashboard extends React.Component {
     } else if (!isLoading && campaigns.length < 1) {
       return(
         <Card
-          title='No hay campañas 😅'
+          title='No hay campañas 😬'
           actions={[<Link key='link-new-campaign' to='/campañas/nueva'>Crear campaña</Link>]}>
-          Crea algunas para verlas acá
+          Crea algunas para ver estadísticas diarias acá
         </Card>
       );
     }
@@ -79,7 +79,7 @@ export default class Dashboard extends React.Component {
               </div>
             :
               <Card
-                title='No hay contactos 😅'
+                title='No hay contactos 👨‍💻'
                 actions={[<Link key='link-new-contact' to='/contactos/nuevo'>Crear contacto</Link>]}>
                 Crea algunos contactos para verlos acá agrupados por etiqueta
               </Card>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
-import { Button, Icon , ProgressBar, Input, Row, Col, Card } from 'react-materialize';
+import { Button, ProgressBar, Input, Row, Col, Card } from 'react-materialize';
 import ContactIndex from './ContactIndex';
 import $ from 'jquery';
 import _ from 'lodash';
@@ -120,7 +120,7 @@ class ContactsIndex extends React.Component {
   }
 
   render() {
-    const { contactos, isLoading } = this.state;
+    const { contactos, isLoading, nameOrEmail } = this.state;
   	return(
 			<div className='contacts'>
 				<Header
@@ -149,15 +149,23 @@ class ContactsIndex extends React.Component {
                   contactos.map((contacto, index) => this.renderContacto(contacto, index))
               }
               {
-                (!isLoading && _.isEmpty(contactos)) &&
+                (!isLoading && nameOrEmail && _.isEmpty(contactos)) &&
                   <Card title='No hay contactos 😢'>Intenta con otros parámetros de búsqueda</Card>
+              }
+              {
+                !isLoading && !nameOrEmail && _.isEmpty(contactos) &&
+                  <Card
+                    title='No hay contactos 😅'
+                    actions={[<Link key='link-new-contact' to='/contactos/nuevo'>Crear contacto</Link>]}>
+                    Crea algunos para verlos acá
+                  </Card>
               }
             </Col>
             <Col s={12} m={4}>
               { this.renderBuscarContacto() }
             </Col>
           </Row>
-					<Link to='/contactos/nuevo' className="btn-floating large fixed-action-btn" id="new-contact"><Icon>add</Icon></Link>
+          <Button floating large className='bottom-right-btn' waves='light' icon='add' onClick={ () => this.props.history.push(`/contactos/nuevo`) }/>
 				</div>
   		</div>
 		);
