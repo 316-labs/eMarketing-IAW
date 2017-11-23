@@ -165,7 +165,7 @@ class ContactsIndex extends React.Component {
               { this.renderBuscarContacto() }
             </Col>
           </Row>
-          <Button floating large className='bottom-right-btn' waves='light' icon='add' onClick={ () => this.props.history.push(`/contactos/nuevo`) }/>
+          <Button floating large className='bottom-right-btn' id='new-contact' waves='light' icon='add' onClick={ () => this.props.history.push(`/contactos/nuevo`) }/>
 				</div>
   		</div>
 		);
