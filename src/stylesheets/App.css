@@ -7229,7 +7229,8 @@ th {
     opacity: 0; }
     .dashboard .today-totals-sent:hover {
       opacity: 1;
-      background-color: #616161;
+      background-color: black;
+      border-color: black;
       color: white; }
 
 html {
