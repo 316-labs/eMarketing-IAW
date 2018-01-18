@@ -1,20 +1,15 @@
-FROM node:7.4.0
+FROM node
 
-# Create app directory
-RUN mkdir -p /src/emarketing
-WORKDIR /src/emarketing
+ENV NPM_CONFIG_LOGLEVEL warn
+ARG app_env
+ENV APP_ENV $app_env
 
-# Install app dependencies
-COPY package.json /src/emarketing/
+RUN mkdir -p /frontend_app
+WORKDIR /frontend_app
+COPY . /frontend_app
+
 RUN npm install
 
-# Bundle app source
-COPY . /src/emarketing
-
-# Build and optimize react app
-RUN npm run build
+CMD npm run start
 
 EXPOSE 3001
-
-# defined in package.json
-CMD [ "npm", "run", "start" ]
